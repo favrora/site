@@ -1,0 +1,109 @@
+/******************
+***  Blog page css
+******************/
+
+.content h1 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.content .date {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #7e7e7e;
+  margin-bottom: 15px;
+}
+
+.sidebar {
+  display: none;
+}
+
+.widget {
+  position: sticky;
+  top: 80px;
+  box-shadow: 0 0 7px var(--box-shadow-color);
+}
+
+.reviews {
+  margin-top: 30px;
+  width: 100%;
+}
+
+@media screen and (min-width: 991px) {
+  .content {
+    flex: 0 0 64%;
+    max-width: 64%;
+    padding: 10px 20px;
+    box-shadow: 0 0 7px var(--box-shadow-color);
+  }
+  .sidebar {
+    display: block;
+    width: 100%;
+    flex: 0 0 27%;
+    max-width: 27%;
+    margin-top: 0;
+  }
+
+  .reviews {
+    padding: 20px;
+    box-shadow: 0 0 7px var(--box-shadow-color);
+  }
+}
+
+h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+}
+
+.content p, .content img {
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.content ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.content ul li {
+  margin-bottom: 10px
+}
+
+.content a {
+  color: var(--brand-color);
+  transition: 200ms;
+}
+
+.content a:hover {
+  color: #8100ff;
+}
+
+.content img.w-400 {
+  width: 400px;
+}
+
+.content .eye-icon {
+  height: 18px;
+  margin: 0 5px;
+}
+
+/**** Widget ads css ****/
+
+.ads-widget {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.ads-widget p {
+  margin-bottom: 10px;
+}
+
+.ads-widget a {
+  color: var(--brand-color);
+  text-decoration: none;
+}
+
+.ads-widget a:hover {
+  color: var(--dark-brand-color);
+}

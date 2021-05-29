@@ -1,0 +1,64 @@
+/******************
+***  Blog css
+******************/
+.blog-box .box {
+  width: 100%;
+  box-shadow: 0 0 7px var(--box-shadow-color);
+  margin-bottom: 50px;
+  cursor: pointer;
+  transition: box-shadow 300ms;
+}
+
+.blog-box .box .img {
+  height: 200px;
+  background: no-repeat center;
+  background-size: cover;
+}
+
+.blog-box .box .content {
+  padding: 10px;
+}
+
+.blog-box .box .content .date {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #959595;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.blog-box .box .content h3 {
+  font-size: 18px;
+  color: #000000;
+  transition: 300ms;
+}
+
+.blog-box .box:hover {
+  box-shadow: 0 0 20px var(--box-shadow-color);
+}
+
+.blog-box .box:hover h3 {
+  color: var(--brand-color);
+}
+
+.blog-box .box a {
+  text-decoration: none;
+}
+
+.box .eye-icon {
+  height: 15px;
+  margin: 0 5px;
+}
+
+@media screen and (min-width: 500px) and (max-width: 767px) {
+  .blog-box .box {
+    width: 48%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .blog-box .box {
+    width: 30%;
+  }
+}

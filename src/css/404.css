@@ -1,0 +1,27 @@
+/******************
+******  CSS  ******
+
+Table of contents
+  1. Main
+
+******************/
+
+/******************
+*** 1. Main
+******************/
+
+h1 {
+  width: 100%;
+  font-weight: bold;
+  transition: 300ms;
+  text-align: center;
+  margin: 0 0 50px;
+  color: var(--brand-color);
+  text-shadow: 0 0 1px black;
+  font: 50px 'Merienda', Arial, sans-serif;
+}
+
+.img-404 {
+  width: 700px;
+  margin: 0 auto;
+}

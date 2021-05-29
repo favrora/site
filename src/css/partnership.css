@@ -1,0 +1,61 @@
+/*******************
+*** Partnership
+*******************/
+
+#partnership {
+  display: flex;
+  flex-flow: column;
+}
+
+#partnership h1 {
+  margin-bottom: 15px;
+}
+
+#partnership button {
+  width: 120px;
+  padding: 12px 0;
+  border: 0;
+  background: var(--brand-color);
+  box-shadow: 0 0 7px #848484;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 300ms;
+  margin-bottom: 20px;
+}
+
+#partnership button:hover {
+  background: var(--dark-brand-color);
+}
+
+#partnership #infoDiv {
+  color: #00da00;
+  margin-bottom: 10px;
+}
+
+#partnership input {
+  width: 300px;
+  box-sizing: border-box;
+  background: #e7e7e7;
+  padding: 7px 10px;
+  border-radius: 3px;
+  margin: 5px 0 15px;
+  font-size: 16px;
+  border: 1px solid #ffffff;
+}
+
+#partnership input:hover {
+  border: 1px solid #b7d0ed;
+}
+
+#partnership input:focus {
+  border: 1px solid #b9b9b9;
+}
+
+#partnership #linkDiv {
+  display: none;
+}
+
+#partnership #emailDiv p {
+  margin-bottom: 20px;
+}

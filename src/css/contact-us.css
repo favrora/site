@@ -1,0 +1,119 @@
+/******************
+*** Contact
+******************/
+#contact {
+  width: 100%;
+  margin: revert;
+}
+
+.h1-center {
+  text-align: center;
+}
+
+#contact.center {
+  margin: 20px auto 0 auto;
+}
+
+.w-100 {
+  flex: 0 0 100%!important;
+  max-width: 100%!important;
+}
+
+#contact input,
+#contact #message,
+#contact select {
+  width: 100%;
+  box-sizing: border-box;
+  background: #e7e7e7;
+  padding: 7px 10px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  border: 1px solid #ffffff;
+}
+
+#contact input:focus,
+#contact #message:focus,
+#contact select:focus {
+  border: 1px solid #b9b9b9;
+}
+
+#contact label {
+  padding-bottom: 5px;
+  font-size: 16px;
+}
+
+#contact #message {
+  resize: vertical;
+  height: 100px;
+  min-height: 100px;
+  max-height: 250px;
+  margin-top: 5px;
+}
+
+#contact .w-100 button {
+  width: 120px;
+  padding: 12px 0;
+  border: 0;
+  background: var(--brand-color);
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+#btn-send.disable {
+  background: #a1a1a1!important;
+  pointer-events: none!important;
+}
+
+#contact .w-100 button:hover {
+  background: var(--dark-brand-color);
+}
+
+#contact-sidebar p {
+  font-size: 16px;
+}
+
+#infoEmail {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.submit-div {
+  display: flex;
+}
+
+@media screen and (min-width: 767px) {
+  #contact .w-50 {
+    flex: 0 0 47%;
+    max-width: 47%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #contact-sidebar {
+    flex: 0 0 22%;
+    max-width: 22%;
+    line-height: 1.7;
+    padding-left: 10px;
+  }
+}
+
+@media screen and (min-width: 991px) {
+  #contact.width-75 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .w-50 {
+    flex: 0 0 100%!important;
+    max-width: 100%!important;
+  }
+
+  #contact-sidebar {
+    display: none;
+  }
+}
