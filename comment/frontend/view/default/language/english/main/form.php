@@ -136,7 +136,7 @@ $_['lang_text_required']                  = '* Required information';
 $_['lang_text_drag_and_drop']             = 'Drag & drop images (max %d)';
 $_['lang_text_loading']                   = 'Loading ..';
 $_['lang_text_country_first']             = 'Please select a country first';
-$_['lang_text_powered_by']                = 'Powered by <a href="%s" title="Commentics" %s>Commentics</a>';
+$_['lang_text_powered_by']                =  ''; // Power by - old text
 $_['lang_text_user_link']                 = 'Click <a href="%s" target="_blank">here</a> if you would like to set your avatar';
 $_['lang_text_maintenance_admin']         = 'The script is in maintenance mode. Only you can see this.';
 $_['lang_text_moderate_admin']            = 'This user posted as the admin.';
