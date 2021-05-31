@@ -522,9 +522,9 @@ class MainFormController extends Controller
 
             if ($this->data['enabled_powered_by']) {
                 if ($this->setting->get('powered_by_type') == 'text') {
-                    $this->data['powered_by'] = sprintf($this->data['lang_text_powered_by'], 'https://www.commentics.org', $this->setting->get('powered_by_new_window') ? 'target="_blank"' : '');
+                    $this->data['powered_by'] = sprintf($this->data['lang_text_powered_by'], 'https://commentics.com', $this->setting->get('powered_by_new_window') ? 'target="_blank"' : '');
                 } else {
-                    $this->data['powered_by'] = '<a href="https://www.commentics.org" title="Commentics" ' . ($this->setting->get('powered_by_new_window') ? 'target="_blank"' : '') . '><img src="' . $this->loadImage('commentics/powered_by.png') . '"></a>';
+                    $this->data['powered_by'] = '<a href="https://commentics.com" title="Commentics" ' . ($this->setting->get('powered_by_new_window') ? 'target="_blank"' : '') . '><img src="' . $this->loadImage('commentics/powered_by.png') . '"></a>';
                 }
             }
 
@@ -633,8 +633,8 @@ class MainFormController extends Controller
                 'state_id'                 => (int) $this->data['state_id'],
                 'enabled_upload'           => (bool) $this->data['enabled_upload'],
                 'maximum_upload_amount'    => (int) $this->setting->get('maximum_upload_amount'),
-                'maximum_upload_size'      => (int) $this->setting->get('maximum_upload_size'),
-                'maximum_upload_total'     => (int) $this->setting->get('maximum_upload_total'),
+                'maximum_upload_size'      => (float) $this->setting->get('maximum_upload_size'),
+                'maximum_upload_total'     => (float) $this->setting->get('maximum_upload_total'),
                 'securimage'               => (bool) $this->data['securimage'],
                 'securimage_url'           => $this->data['securimage_url'],
                 'cmtx_wait_for_comment'    => $this->data['cmtx_wait_for_comment'],
@@ -986,7 +986,7 @@ class MainFormController extends Controller
                                 }
 
                                 /* Headline */
-                                if ($this->setting->get('enabled_headline')) {
+                                if ($this->setting->get('enabled_headline') && empty($this->request->post['cmtx_reply_to'])) {
                                     if (isset($this->request->post['cmtx_headline']) && $this->request->post['cmtx_headline'] != '') {
                                         $headline = $this->security->decode($this->request->post['cmtx_headline']);
 
@@ -1657,7 +1657,7 @@ class MainFormController extends Controller
 
                     $show_bio = false;
 
-                    $show_gravatar      = $this->setting->get('show_gravatar');
+                    $avatar_type        = $this->setting->get('avatar_type');
                     $show_level         = $this->setting->get('show_level');
                     $show_rating        = $this->setting->get('show_rating');
                     $show_website       = $this->setting->get('show_website');
@@ -1708,7 +1708,7 @@ class MainFormController extends Controller
 
                     $comment = array(
                         'id'               => 0,
-                        'gravatar'         => '//www.gravatar.com/avatar/' . md5(strtolower(trim($this->request->post['cmtx_email']))) . '?d=' . ($this->setting->get('gravatar_default') == 'custom' ? $this->url->encode($this->setting->get('gravatar_custom')) : $this->setting->get('gravatar_default')) . '&amp;r=' . $this->setting->get('gravatar_audience') . '&amp;s=' . $this->setting->get('gravatar_size'),
+                        'avatar'           => ($user ? $this->user->getAvatar($user['id']) : $this->user->getAvatar(0)),
                         'level'            => $this->data['lang_text_preview'],
                         'name'             => $this->request->post['cmtx_name'],
                         'website'          => $this->request->post['cmtx_website'],
@@ -1738,9 +1738,15 @@ class MainFormController extends Controller
 
                         $user_id = $user['id'];
                     } else {
-                        $user_token = $this->variable->random();
+                        $user_token = $this->user->createToken();
 
                         $user_id = $this->user->createUser($this->request->post['cmtx_name'], $this->request->post['cmtx_email'], $user_token, $ip_address);
+
+                        if ($this->setting->get('avatar_user_link')) {
+                            if (in_array($this->setting->get('avatar_type'), array('selection', 'upload')) || ($this->setting->get('avatar_type') == 'gravatar' && $this->request->post['cmtx_email'])) {
+                                $json['user_link'] = sprintf($this->data['lang_text_user_link'], $this->setting->get('commentics_url') . 'frontend/index.php?route=main/user&u-t=' . $user_token);
+                            }
+                        }
                     }
 
                     /* Determine if the comment needs to be approved by the administrator */
@@ -1820,7 +1826,7 @@ class MainFormController extends Controller
 
                     if ($this->setting->get('enabled_notify') && isset($this->request->post['cmtx_notify']) && $this->setting->get('enabled_email') && $this->request->post['cmtx_email'] && !$is_admin) {
                         if (!$this->model_main_form->subscriptionExists($user_id, $page_id) && !$this->model_main_form->userHasSubscriptionAttempt($user_id) && !$this->model_main_form->ipHasSubscriptionAttempt($ip_address)) {
-                            $subscription_token = $this->variable->random();
+                            $subscription_token = $this->user->createToken();
 
                             $subscription_id = $this->model_main_form->addSubscription($user_id, $page_id, $subscription_token, $ip_address);
 

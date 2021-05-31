@@ -109,11 +109,11 @@ class SettingsLayoutFormModel extends Model
 
         $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (isset($data['enabled_upload']) ? 1 : 0) . "' WHERE `title` = 'enabled_upload'");
 
-        $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (int) $data['maximum_upload_size'] . "' WHERE `title` = 'maximum_upload_size'");
+        $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (float) $data['maximum_upload_size'] . "' WHERE `title` = 'maximum_upload_size'");
 
         $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (int) $data['maximum_upload_amount'] . "' WHERE `title` = 'maximum_upload_amount'");
 
-        $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (int) $data['maximum_upload_total'] . "' WHERE `title` = 'maximum_upload_total'");
+        $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '" . (float) $data['maximum_upload_total'] . "' WHERE `title` = 'maximum_upload_total'");
 
         /* Name */
 
@@ -370,5 +370,58 @@ class SettingsLayoutFormModel extends Model
         } else {
             die('<b>Error</b>: Could not load image ' . strtolower($cmtx_image) . '!');
         }
+    }
+
+    public function checkLayoutSettings()
+    {
+        $this->setting->refresh();
+
+        $layout_settings_enabled = $layout_settings_disabled = array();
+
+        if ($this->setting->get('enabled_headline') && !$this->setting->get('show_headline')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_headline');
+        } else if (!$this->setting->get('enabled_headline') && $this->setting->get('show_headline')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_headline');
+        }
+
+        if ($this->setting->get('enabled_rating') && !$this->setting->get('show_rating')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_rating');
+        } else if (!$this->setting->get('enabled_rating') && $this->setting->get('show_rating')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_rating');
+        }
+
+        if ($this->setting->get('enabled_website') && !$this->setting->get('show_website')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_website');
+        } else if (!$this->setting->get('enabled_website') && $this->setting->get('show_website')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_website');
+        }
+
+        if ($this->setting->get('enabled_town') && !$this->setting->get('show_town')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_town');
+        } else if (!$this->setting->get('enabled_town') && $this->setting->get('show_town')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_town');
+        }
+
+        if ($this->setting->get('enabled_state') && !$this->setting->get('show_state')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_state');
+        } else if (!$this->setting->get('enabled_state') && $this->setting->get('show_state')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_state');
+        }
+
+        if ($this->setting->get('enabled_country') && !$this->setting->get('show_country')) {
+            $layout_settings_enabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_country');
+        } else if (!$this->setting->get('enabled_country') && $this->setting->get('show_country')) {
+            $layout_settings_disabled[] = $this->loadWord('settings/layout_form', 'lang_subheading_country');
+        }
+
+        return array(
+            'enabled'  => $layout_settings_enabled,
+            'disabled' => $layout_settings_disabled
+        );
+    }
+
+    public function stopLayoutDetect()
+    {
+        $this->db->query("UPDATE `" . CMTX_DB_PREFIX . "settings` SET `value` = '0' WHERE `title` = 'layout_detect'");
     }
 }

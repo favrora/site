@@ -1171,13 +1171,42 @@ class SettingsLayoutFormController extends Controller
             $this->data['error_powered_by_type'] = '';
         }
 
+        $this->data['layout_detect'] = $this->setting->get('layout_detect');
+
+        if ($this->data['layout_detect']) {
+            $layout_settings = $this->model_settings_layout_form->checkLayoutSettings();
+
+            if ($layout_settings['enabled']) {
+                $this->data['layout_settings'] = $layout_settings['enabled'];
+
+                $this->data['lang_dialog_content'] = sprintf($this->data['lang_dialog_content_enabled'], $this->url->link('settings/layout_comments'));
+            } else if ($layout_settings['disabled']) {
+                $this->data['layout_settings'] = $layout_settings['disabled'];
+
+                $this->data['lang_dialog_content'] = sprintf($this->data['lang_dialog_content_disabled'], $this->url->link('settings/layout_comments'));
+            } else {
+                $this->data['layout_settings'] = false;
+            }
+
+            $this->data['lang_dialog_title'] = $this->variable->encodeDouble($this->data['lang_dialog_title']);
+            $this->data['lang_dialog_stop'] = $this->variable->escapeSingle($this->data['lang_dialog_stop']);
+            $this->data['lang_dialog_close'] = $this->variable->escapeSingle($this->data['lang_dialog_close']);
+        }
+
         if (!$this->setting->get('licence')) {
-            $this->data['info'] = sprintf($this->data['lang_notice'], 'https://www.commentics.org/pricing');
+            $this->data['info'] = sprintf($this->data['lang_notice'], 'https://commentics.com/pricing');
         }
 
         $this->components = array('common/header', 'common/footer');
 
         $this->loadView('settings/layout_form');
+    }
+
+    public function stopLayoutDetect()
+    {
+        $this->loadModel('settings/layout_form');
+
+        $this->model_settings_layout_form->stopLayoutDetect();
     }
 
     private function validate()
@@ -1214,16 +1243,16 @@ class SettingsLayoutFormController extends Controller
 
         /* Upload */
 
-        if (!isset($this->request->post['maximum_upload_size']) || !$this->validation->isInt($this->request->post['maximum_upload_size']) || $this->request->post['maximum_upload_size'] < 1 || $this->request->post['maximum_upload_size'] > 99) {
-            $this->error['maximum_upload_size'] = sprintf($this->data['lang_error_range'], 1, 99);
+        if (!isset($this->request->post['maximum_upload_size']) || !$this->validation->isFloat($this->request->post['maximum_upload_size']) || $this->request->post['maximum_upload_size'] < 0.1 || $this->request->post['maximum_upload_size'] > 99.9) {
+            $this->error['maximum_upload_size'] = $this->data['lang_error_max_size'];
         }
 
         if (!isset($this->request->post['maximum_upload_amount']) || !$this->validation->isInt($this->request->post['maximum_upload_amount']) || $this->request->post['maximum_upload_amount'] < 1 || $this->request->post['maximum_upload_amount'] > 10) {
             $this->error['maximum_upload_amount'] = sprintf($this->data['lang_error_range'], 1, 10);
         }
 
-        if (!isset($this->request->post['maximum_upload_total']) || !$this->validation->isInt($this->request->post['maximum_upload_total']) || $this->request->post['maximum_upload_total'] < 1 || $this->request->post['maximum_upload_total'] > 99) {
-            $this->error['maximum_upload_total'] = sprintf($this->data['lang_error_range'], 1, 99);
+        if (!isset($this->request->post['maximum_upload_total']) || !$this->validation->isFloat($this->request->post['maximum_upload_total']) || $this->request->post['maximum_upload_total'] < 0.1 || $this->request->post['maximum_upload_total'] > 99.9) {
+            $this->error['maximum_upload_total'] = $this->data['lang_error_max_total'];
         }
 
         /* Name */
@@ -1350,8 +1379,16 @@ class SettingsLayoutFormController extends Controller
             $this->error['recaptcha_public_key'] = sprintf($this->data['lang_error_length'], 0, 250);
         }
 
+        if (isset($this->request->post['enabled_captcha']) && isset($this->request->post['captcha_type']) && $this->request->post['captcha_type'] == 'recaptcha' && isset($this->request->post['recaptcha_public_key']) && $this->validation->length($this->request->post['recaptcha_public_key']) < 1) {
+            $this->error['recaptcha_public_key'] = sprintf($this->data['lang_error_length'], 1, 250);
+        }
+
         if (!isset($this->request->post['recaptcha_private_key']) || $this->validation->length($this->request->post['recaptcha_private_key']) > 250) {
             $this->error['recaptcha_private_key'] = sprintf($this->data['lang_error_length'], 0, 250);
+        }
+
+        if (isset($this->request->post['enabled_captcha']) && isset($this->request->post['captcha_type']) && $this->request->post['captcha_type'] == 'recaptcha' && isset($this->request->post['recaptcha_private_key']) && $this->validation->length($this->request->post['recaptcha_private_key']) < 1) {
+            $this->error['recaptcha_private_key'] = sprintf($this->data['lang_error_length'], 1, 250);
         }
 
         if (!isset($this->request->post['recaptcha_theme']) || !in_array($this->request->post['recaptcha_theme'], array('dark', 'light'))) {

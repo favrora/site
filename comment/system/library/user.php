@@ -12,6 +12,7 @@ class User
     private $security;
     private $session;
     private $setting;
+    private $url;
     private $validation;
     private $variable;
     private $is_admin = false;
@@ -28,6 +29,7 @@ class User
         $this->security   = $registry->get('security');
         $this->session    = $registry->get('session');
         $this->setting    = $registry->get('setting');
+        $this->url        = $registry->get('url');
         $this->validation = $registry->get('validation');
         $this->variable   = $registry->get('variable');
 
@@ -45,9 +47,22 @@ class User
 
     public function createUser($name, $email, $token, $ip_address)
     {
-        $this->db->query("INSERT INTO `" . CMTX_DB_PREFIX . "users` SET `name` = '" . $this->db->escape($name) . "', `email` = '" . $this->db->escape($email) . "', `moderate` = 'default', `token` = '" . $this->db->escape($token) . "', `to_all` = '" . ($this->setting->get('notify_type') == 'all' ? 1 : 0) . "', `to_admin` = '1', `to_reply` = '1', `to_approve` = '" . (int) $this->setting->get('notify_approve') . "', `format` = '" . $this->db->escape($this->setting->get('notify_format')) . "', `ip_address` = '" . $this->db->escape($ip_address) . "', `date_modified` = NOW(), `date_added` = NOW()");
+        $this->db->query("INSERT INTO `" . CMTX_DB_PREFIX . "users` SET `name` = '" . $this->db->escape($name) . "', `email` = '" . $this->db->escape($email) . "', `moderate` = 'default', `token` = '" . $this->db->escape($token) . "', `to_all` = '" . ($this->setting->get('notify_type') == 'all' ? 1 : 0) . "', `to_admin` = '1', `to_reply` = '1', `to_approve` = '1', `format` = '" . $this->db->escape($this->setting->get('notify_format')) . "', `ip_address` = '" . $this->db->escape($ip_address) . "', `date_modified` = NOW(), `date_added` = NOW()");
 
         return $this->db->insertId();
+    }
+
+    public function createToken()
+    {
+        do {
+            $token = $this->variable->random(50);
+
+            $user_token_exists = $this->db->query("SELECT `token` FROM `" . CMTX_DB_PREFIX . "users` WHERE `token` = '" . $this->db->escape($token) . "'");
+
+            $subscription_token_exists = $this->db->query("SELECT `token` FROM `" . CMTX_DB_PREFIX . "subscriptions` WHERE `token` = '" . $this->db->escape($token) . "'");
+        } while ($this->db->numRows($user_token_exists) > 0 || $this->db->numRows($subscription_token_exists) > 0);
+
+        return $token;
     }
 
     public function userExists($id)
@@ -75,6 +90,19 @@ class User
     public function getUserByNameAndNoEmail($name)
     {
         $query = $this->db->query("SELECT `id` FROM `" . CMTX_DB_PREFIX . "users` WHERE `name` = '" . $this->db->escape($name) . "' AND `email` = ''");
+
+        $result = $this->db->row($query);
+
+        if ($result) {
+            return $this->getUser($result['id']);
+        } else {
+            return false;
+        }
+    }
+
+    public function getUserByToken($token)
+    {
+        $query = $this->db->query("SELECT `id` FROM `" . CMTX_DB_PREFIX . "users` WHERE `token` = '" . $this->db->escape($token) . "'");
 
         $result = $this->db->row($query);
 
@@ -115,21 +143,24 @@ class User
             $user = $this->db->row($query);
 
             return array(
-                'id'            => $user['id'],
-                'name'          => $user['name'],
-                'email'         => $user['email'],
-                'moderate'      => $user['moderate'],
-                'token'         => $user['token'],
-                'to_all'        => $user['to_all'],
-                'to_admin'      => $user['to_admin'],
-                'to_reply'      => $user['to_reply'],
-                'to_approve'    => $user['to_approve'],
-                'format'        => $user['format'],
-                'ip_address'    => $user['ip_address'],
-                'comments'      => $user['comments'],
-                'subscriptions' => $user['subscriptions'],
-                'date_modified' => $user['date_modified'],
-                'date_added'    => $user['date_added']
+                'id'                 => $user['id'],
+                'avatar_id'          => $user['avatar_id'],
+                'avatar_pending_id'  => $user['avatar_pending_id'],
+                'avatar_selected'    => $user['avatar_selected'],
+                'name'               => $user['name'],
+                'email'              => $user['email'],
+                'moderate'           => $user['moderate'],
+                'token'              => $user['token'],
+                'to_all'             => $user['to_all'],
+                'to_admin'           => $user['to_admin'],
+                'to_reply'           => $user['to_reply'],
+                'to_approve'         => $user['to_approve'],
+                'format'             => $user['format'],
+                'ip_address'         => $user['ip_address'],
+                'comments'           => $user['comments'],
+                'subscriptions'      => $user['subscriptions'],
+                'date_modified'      => $user['date_modified'],
+                'date_added'         => $user['date_added']
             );
         } else {
             return false;
@@ -237,28 +268,23 @@ class User
             $email = $this->email->get('ban');
 
             foreach ($admins as $admin) {
-                if ($admin['format'] == 'text') {
-                    $body = $email['text'];
-                } else {
-                    $body = $email['html'];
-                }
-
                 $subject = $this->security->decode(str_ireplace('[username]', $admin['username'], $email['subject']));
 
-                $body = str_ireplace('[username]', $admin['username'], $body);
-                $body = str_ireplace('[ip address]', $ip_address, $body);
-                $body = str_ireplace('[reason]', $reason, $body);
-                $body = str_ireplace('[admin link]', $this->email->getAdminLink(), $body);
+                $text = str_ireplace('[username]', $admin['username'], $email['text']);
+                $text = str_ireplace('[ip address]', $ip_address, $text);
+                $text = str_ireplace('[reason]', $reason, $text);
+                $text = str_ireplace('[admin link]', $this->email->getAdminLink(), $text);
+                $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                $text = $this->security->decode($text);
 
-                if ($admin['format'] == 'text') {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                } else {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $body);
-                }
+                $html = str_ireplace('[username]', $admin['username'], $email['html']);
+                $html = str_ireplace('[ip address]', $ip_address, $html);
+                $html = str_ireplace('[reason]', $reason, $html);
+                $html = str_ireplace('[admin link]', $this->email->getAdminLink(), $html);
+                $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                $html = $this->security->decode($html);
 
-                $body = $this->security->decode($body);
-
-                $this->email->send($admin['email'], null, $subject, $body, $admin['format'], $this->page->getSiteId());
+                $this->email->send($admin['email'], null, $subject, $text, $html, $admin['format'], $this->page->getSiteId());
             }
         }
     }
@@ -322,5 +348,67 @@ class User
     public function getLogin($index)
     {
         return $this->login[$index];
+    }
+
+    private function getUploadedAvatar($avatar_id)
+    {
+        $query = $this->db->query("SELECT * FROM `" . CMTX_DB_PREFIX . "uploads` WHERE `id` = '" . (int) $avatar_id . "'");
+
+        $results = $this->db->row($query);
+
+        return $results;
+    }
+
+    public function getAvatar($id, $show_pending = false)
+    {
+        $avatar = '';
+
+        if ($id) {
+            $query = $this->db->query("SELECT * FROM `" . CMTX_DB_PREFIX . "users` WHERE `id` = '" . (int) $id . "'");
+
+            $user = $this->db->row($query);
+
+            if ($user) {
+                if ($this->setting->get('avatar_type') == 'gravatar') {
+                    $avatar = '//www.gravatar.com/avatar/' . md5(strtolower(trim($user['email']))) . '?d=' . ($this->setting->get('gravatar_default') == 'custom' ? $this->url->encode($this->setting->get('gravatar_custom')) : $this->setting->get('gravatar_default')) . '&amp;r=' . $this->setting->get('gravatar_audience') . '&amp;s=' . $this->setting->get('gravatar_size');
+                }
+
+                if ($this->setting->get('avatar_type') == 'selection') {
+                    if ($user['avatar_selected']) {
+                        if (file_exists(CMTX_DIR_ROOT . 'frontend/view/' . $this->setting->get('theme') . '/image/avatar/' . $user['avatar_selected'])) {
+                            $avatar = $this->url->getCommenticsUrl() . 'frontend/view/' . $this->setting->get('theme') . '/image/avatar/' . $user['avatar_selected'];
+                        } else if (file_exists(CMTX_DIR_ROOT . 'frontend/view/default/image/avatar/' . $user['avatar_selected'])) {
+                            $avatar = $this->url->getCommenticsUrl() . 'frontend/view/default/image/avatar/' . $user['avatar_selected'];
+                        }
+                    }
+                }
+
+                if ($this->setting->get('avatar_type') == 'upload') {
+                    $avatar_approved = $this->getUploadedAvatar($user['avatar_id']);
+
+                    $avatar_pending = $this->getUploadedAvatar($user['avatar_pending_id']);
+
+                    if ($show_pending && $avatar_pending) {
+                        if (file_exists(CMTX_DIR_UPLOAD . $avatar_pending['folder'] . '/' . $avatar_pending['filename'] . '.' . $avatar_pending['extension'])) {
+                            $avatar = $this->url->getCommenticsUrl() . 'upload/' . $avatar_pending['folder'] . '/' . $avatar_pending['filename'] . '.' . $avatar_pending['extension'];
+                        }
+                    } else if ($avatar_approved) {
+                        if (file_exists(CMTX_DIR_UPLOAD . $avatar_approved['folder'] . '/' . $avatar_approved['filename'] . '.' . $avatar_approved['extension'])) {
+                            $avatar = $this->url->getCommenticsUrl() . 'upload/' . $avatar_approved['folder'] . '/' . $avatar_approved['filename'] . '.' . $avatar_approved['extension'];
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!$avatar) {
+            if (file_exists(CMTX_DIR_ROOT . 'frontend/view/' . $this->setting->get('theme') . '/image/misc/avatar.png')) {
+                $avatar = $this->url->getCommenticsUrl() . 'frontend/view/' . $this->setting->get('theme') . '/image/misc/avatar.png';
+            } else if (file_exists(CMTX_DIR_ROOT . 'frontend/view/default/image/misc/avatar.png')) {
+                $avatar = $this->url->getCommenticsUrl() . 'frontend/view/default/image/misc/avatar.png';
+            }
+        }
+
+        return $avatar;
     }
 }

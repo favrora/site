@@ -38,32 +38,29 @@ class Notify
             $email = $this->email->get('comment_success');
 
             foreach ($admins as $admin) {
-                if ($admin['format'] == 'text') {
-                    $body = $email['text'];
-                } else {
-                    $body = $email['html'];
-                }
-
                 $subject = $this->security->decode($email['subject']);
 
-                $body = str_ireplace('[username]', $admin['username'], $body);
-                $body = str_ireplace('[page reference]', $comment['page_reference'], $body);
-                $body = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $body);
-                $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $body);
-                $body = str_ireplace('[poster]', $comment['name'], $body);
-                $body = str_ireplace('[admin link]', $this->email->getAdminLink(), $body);
+                $text = str_ireplace('[username]', $admin['username'], $email['text']);
+                $text = str_ireplace('[page reference]', $comment['page_reference'], $text);
+                $text = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $text);
+                $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $text);
+                $text = str_ireplace('[poster]', $comment['name'], $text);
+                $text = str_ireplace('[admin link]', $this->email->getAdminLink(), $text);
+                $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                $text = $this->security->decode($text);
+                $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                if ($admin['format'] == 'text') {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                } else {
-                    $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                }
+                $html = str_ireplace('[username]', $admin['username'], $email['html']);
+                $html = str_ireplace('[page reference]', $comment['page_reference'], $html);
+                $html = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $html);
+                $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $html);
+                $html = str_ireplace('[poster]', $comment['name'], $html);
+                $html = str_ireplace('[admin link]', $this->email->getAdminLink(), $html);
+                $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                $html = $this->security->decode($html);
+                $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                $body = $this->security->decode($body);
-
-                $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $admin['format']), $body);
-
-                $this->email->send($admin['email'], null, $subject, $body, $admin['format'], $this->page->getSiteId());
+                $this->email->send($admin['email'], null, $subject, $text, $html, $admin['format'], $this->page->getSiteId());
             }
         }
     }
@@ -81,33 +78,31 @@ class Notify
             $email = $this->email->get('comment_approve');
 
             foreach ($admins as $admin) {
-                if ($admin['format'] == 'text') {
-                    $body = $email['text'];
-                } else {
-                    $body = $email['html'];
-                }
-
                 $subject = $this->security->decode($email['subject']);
 
-                $body = str_ireplace('[username]', $admin['username'], $body);
-                $body = str_ireplace('[page reference]', $comment['page_reference'], $body);
-                $body = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $body);
-                $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $body);
-                $body = str_ireplace('[poster]', $comment['name'], $body);
-                $body = str_ireplace('[reason]', $this->prepareReasons($comment['notes'], $admin['format']), $body);
-                $body = str_ireplace('[admin link]', $this->email->getAdminLink(), $body);
+                $text = str_ireplace('[username]', $admin['username'], $email['text']);
+                $text = str_ireplace('[page reference]', $comment['page_reference'], $text);
+                $text = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $text);
+                $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $text);
+                $text = str_ireplace('[poster]', $comment['name'], $text);
+                $text = str_ireplace('[reason]', $this->prepareReasons($comment['notes'], 'text'), $text);
+                $text = str_ireplace('[admin link]', $this->email->getAdminLink(), $text);
+                $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                $text = $this->security->decode($text);
+                $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                if ($admin['format'] == 'text') {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                } else {
-                    $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                }
+                $html = str_ireplace('[username]', $admin['username'], $email['html']);
+                $html = str_ireplace('[page reference]', $comment['page_reference'], $html);
+                $html = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $html);
+                $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $html);
+                $html = str_ireplace('[poster]', $comment['name'], $html);
+                $html = str_ireplace('[reason]', $this->prepareReasons($comment['notes'], 'html'), $html);
+                $html = str_ireplace('[admin link]', $this->email->getAdminLink(), $html);
+                $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                $html = $this->security->decode($html);
+                $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                $body = $this->security->decode($body);
-
-                $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $admin['format']), $body);
-
-                $this->email->send($admin['email'], null, $subject, $body, $admin['format'], $this->page->getSiteId());
+                $this->email->send($admin['email'], null, $subject, $text, $html, $admin['format'], $this->page->getSiteId());
             }
         }
     }
@@ -125,32 +120,29 @@ class Notify
             $email = $this->email->get('flag');
 
             foreach ($admins as $admin) {
-                if ($admin['format'] == 'text') {
-                    $body = $email['text'];
-                } else {
-                    $body = $email['html'];
-                }
-
                 $subject = $this->security->decode(str_ireplace('[username]', $admin['username'], $email['subject']));
 
-                $body = str_ireplace('[username]', $admin['username'], $body);
-                $body = str_ireplace('[page reference]', $comment['page_reference'], $body);
-                $body = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $body);
-                $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $body);
-                $body = str_ireplace('[poster]', $comment['name'], $body);
-                $body = str_ireplace('[admin link]', $this->email->getAdminLink(), $body);
+                $text = str_ireplace('[username]', $admin['username'], $email['text']);
+                $text = str_ireplace('[page reference]', $comment['page_reference'], $text);
+                $text = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $text);
+                $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $text);
+                $text = str_ireplace('[poster]', $comment['name'], $text);
+                $text = str_ireplace('[admin link]', $this->email->getAdminLink(), $text);
+                $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                $text = $this->security->decode($text);
+                $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                if ($admin['format'] == 'text') {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                } else {
-                    $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                }
+                $html = str_ireplace('[username]', $admin['username'], $email['html']);
+                $html = str_ireplace('[page reference]', $comment['page_reference'], $html);
+                $html = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $html);
+                $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $html);
+                $html = str_ireplace('[poster]', $comment['name'], $html);
+                $html = str_ireplace('[admin link]', $this->email->getAdminLink(), $html);
+                $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                $html = $this->security->decode($html);
+                $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                $body = $this->security->decode($body);
-
-                $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $admin['format']), $body);
-
-                $this->email->send($admin['email'], null, $subject, $body, $admin['format'], $this->page->getSiteId());
+                $this->email->send($admin['email'], null, $subject, $text, $html, $admin['format'], $this->page->getSiteId());
             }
         }
     }
@@ -167,28 +159,23 @@ class Notify
             $email = $this->email->get('new_version');
 
             foreach ($admins as $admin) {
-                if ($admin['format'] == 'text') {
-                    $body = $email['text'];
-                } else {
-                    $body = $email['html'];
-                }
-
                 $subject = $this->security->decode($email['subject']);
 
-                $body = str_ireplace('[username]', $admin['username'], $body);
-                $body = str_ireplace('[installed version]', 'v' . $installed, $body);
-                $body = str_ireplace('[newest version]', 'v' . $newest, $body);
-                $body = str_ireplace('[admin link]', $this->email->getAdminLink(), $body);
+                $text = str_ireplace('[username]', $admin['username'], $email['text']);
+                $text = str_ireplace('[installed version]', 'v' . $installed, $text);
+                $text = str_ireplace('[newest version]', 'v' . $newest, $text);
+                $text = str_ireplace('[admin link]', $this->email->getAdminLink(), $text);
+                $text = str_ireplace('[signature]', $this->email->getSignatureText(), $text);
+                $text = $this->security->decode($text);
 
-                if ($admin['format'] == 'text') {
-                    $body = str_ireplace('[signature]', $this->email->getSignatureText(), $body);
-                } else {
-                    $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml()), $body);
-                }
+                $html = str_ireplace('[username]', $admin['username'], $email['html']);
+                $html = str_ireplace('[installed version]', 'v' . $installed, $html);
+                $html = str_ireplace('[newest version]', 'v' . $newest, $html);
+                $html = str_ireplace('[admin link]', $this->email->getAdminLink(), $html);
+                $html = str_ireplace('[signature]', $this->email->getSignatureHtml(), $html);
+                $html = $this->security->decode($html);
 
-                $body = $this->security->decode($body);
-
-                $this->email->send($admin['email'], null, $subject, $body, $admin['format']);
+                $this->email->send($admin['email'], null, $subject, $text, $html, $admin['format']);
             }
         }
     }
@@ -202,37 +189,48 @@ class Notify
             return;
         }
 
-        if (!$comment['to_approve']) { // only notify the user if they have requested it
+        if (!$comment['email']) { // check that the user has an email address
+            return;
+        }
+
+        if (!$comment['to_all'] && !$comment['to_approve']) { // only notify the user if they have requested it
+            return;
+        }
+
+        /* Check that the user has a confirmed subscription for the page */
+        $query = $this->db->query(" SELECT *
+                                    FROM `" . CMTX_DB_PREFIX . "subscriptions`
+                                    WHERE `user_id` = '" . (int) $comment['user_id'] . "'
+                                    AND `page_id` = '" . (int) $comment['page_id'] . "'
+                                    AND `is_confirmed` = '1'");
+
+        if (!$this->db->numRows($query)) {
             return;
         }
 
         $email = $this->email->get('user_comment_approved');
 
-        if ($comment['format'] == 'text') {
-            $body = $email['text'];
-        } else {
-            $body = $email['html'];
-        }
-
         $subject = $this->security->decode(str_ireplace('[name]', $comment['name'], $email['subject']));
 
-        $body = str_ireplace('[name]', $comment['name'], $body);
-        $body = str_ireplace('[page reference]', $comment['page_reference'], $body);
-        $body = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $body);
-        $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $body);
-        $body = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($comment['token'])), $body);
+        $text = str_ireplace('[name]', $comment['name'], $email['text']);
+        $text = str_ireplace('[page reference]', $comment['page_reference'], $text);
+        $text = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $text);
+        $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $text);
+        $text = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($comment['token'])), $text);
+        $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+        $text = $this->security->decode($text);
+        $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-        if ($comment['format'] == 'text') {
-            $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-        } else {
-            $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-        }
+        $html = str_ireplace('[name]', $comment['name'], $email['html']);
+        $html = str_ireplace('[page reference]', $comment['page_reference'], $html);
+        $html = str_ireplace('[page url]', $this->prepareUrl($comment['page_url']), $html);
+        $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $comment['page_url'])), $html);
+        $html = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($comment['token'])), $html);
+        $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+        $html = $this->security->decode($html);
+        $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-        $body = $this->security->decode($body);
-
-        $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $comment['format']), $body);
-
-        $this->email->send($comment['email'], $comment['name'], $subject, $body, $comment['format'], $this->page->getSiteId());
+        $this->email->send($comment['email'], $comment['name'], $subject, $text, $html, $comment['format'], $this->page->getSiteId());
     }
 
     /* Request confirmation from the user that they want to be subscribed */
@@ -240,33 +238,32 @@ class Notify
     {
         $email = $this->email->get('subscriber_confirmation');
 
-        if ($format == 'text') {
-            $body = $email['text'];
-        } else {
-            $body = $email['html'];
-        }
+        $subject = $this->security->decode($email['subject']);
 
-        $body = str_ireplace('[name]', $name, $body);
-        $body = str_ireplace('[page reference]', $page_reference, $body);
-        $body = str_ireplace('[page url]', $this->prepareUrl($page_url), $body);
-        $body = str_ireplace('[confirmation link]', $this->prepareUrl($this->buildSubscriptionConfirmationUrl($user_token, $subscription_token)), $body);
+        $text = str_ireplace('[name]', $name, $email['text']);
+        $text = str_ireplace('[page reference]', $page_reference, $text);
+        $text = str_ireplace('[page url]', $this->prepareUrl($page_url), $text);
+        $text = str_ireplace('[confirmation link]', $this->prepareUrl($this->buildSubscriptionConfirmationUrl($user_token, $subscription_token)), $text);
+        $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+        $text = $this->security->decode($text);
 
-        if ($format == 'text') {
-            $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-        } else {
-            $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-        }
+        $html = str_ireplace('[name]', $name, $email['html']);
+        $html = str_ireplace('[page reference]', $page_reference, $html);
+        $html = str_ireplace('[page url]', $this->prepareUrl($page_url), $html);
+        $html = str_ireplace('[confirmation link]', $this->prepareUrl($this->buildSubscriptionConfirmationUrl($user_token, $subscription_token)), $html);
+        $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+        $html = $this->security->decode($html);
 
-        $body = $this->security->decode($body);
-
-        $this->email->send($to_email, $name, $email['subject'], $body, $format, $this->page->getSiteId());
+        $this->email->send($to_email, $name, $subject, $text, $html, $format, $this->page->getSiteId());
     }
 
     /* Notify subscribers of a new comment */
     public function subscriberNotification($id)
     {
         /* Get all user subscribers and store as property (stops users from receiving more than one email) */
-        $query = $this->db->query("SELECT `id` FROM `" . CMTX_DB_PREFIX . "users` WHERE `to_all` = '1' OR `to_admin` = '1' OR `to_reply` = '1'");
+        $query = $this->db->query(" SELECT `id` FROM `" . CMTX_DB_PREFIX . "users`
+                                    WHERE `email` != ''
+                                    AND (`to_all` = '1' OR `to_admin` = '1' OR `to_reply` = '1')");
 
         $users = $this->db->rows($query);
 
@@ -323,7 +320,8 @@ class Notify
                                     FROM `" . CMTX_DB_PREFIX . "users` `u`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "subscriptions` `s` ON `u`.`id` = `s`.`user_id`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "pages` `p` ON `s`.`page_id` = `p`.`id`
-                                    WHERE (`u`.`to_all` = '1' OR `u`.`to_reply` = '1')
+                                    WHERE `u`.`email` != ''
+                                    AND (`u`.`to_all` = '1' OR `u`.`to_reply` = '1')
                                     AND `u`.`id` IN (" . $this->db->escape(implode(',', $this->parents)) . ")
                                     AND `s`.`page_id` = '" . (int) $comment['page_id'] . "'
                                     AND `s`.`is_confirmed` = '1'");
@@ -335,32 +333,29 @@ class Notify
 
             foreach ($users as $user) {
                 if (in_array($user['id'], $this->users)) { // if the user has not already received an email
-                    if ($user['format'] == 'text') {
-                        $body = $email['text'];
-                    } else {
-                        $body = $email['html'];
-                    }
-
                     $subject = $this->security->decode(str_ireplace('[name]', $user['name'], $email['subject']));
 
-                    $body = str_ireplace('[name]', $user['name'], $body);
-                    $body = str_ireplace('[page reference]', $user['page_reference'], $body);
-                    $body = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $body);
-                    $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $body);
-                    $body = str_ireplace('[poster]', $comment['name'], $body);
-                    $body = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $body);
+                    $text = str_ireplace('[name]', $user['name'], $email['text']);
+                    $text = str_ireplace('[page reference]', $user['page_reference'], $text);
+                    $text = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $text);
+                    $text = str_ireplace('[poster]', $comment['name'], $text);
+                    $text = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $text);
+                    $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                    $text = $this->security->decode($text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                    if ($user['format'] == 'text') {
-                        $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                    } else {
-                        $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                    }
+                    $html = str_ireplace('[name]', $user['name'], $email['html']);
+                    $html = str_ireplace('[page reference]', $user['page_reference'], $html);
+                    $html = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $html);
+                    $html = str_ireplace('[poster]', $comment['name'], $html);
+                    $html = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $html);
+                    $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                    $html = $this->security->decode($html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                    $body = $this->security->decode($body);
-
-                    $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $user['format']), $body);
-
-                    $this->email->send($user['email'], $user['name'], $subject, $body, $user['format'], $this->page->getSiteId());
+                    $this->email->send($user['email'], $user['name'], $subject, $text, $html, $user['format'], $this->page->getSiteId());
 
                     $this->sent_to++;
 
@@ -377,7 +372,8 @@ class Notify
                                     FROM `" . CMTX_DB_PREFIX . "users` `u`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "subscriptions` `s` ON `u`.`id` = `s`.`user_id`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "pages` `p` ON `s`.`page_id` = `p`.`id`
-                                    WHERE (`u`.`to_all` = '1' OR `u`.`to_admin` = '1')
+                                    WHERE `u`.`email` != ''
+                                    AND (`u`.`to_all` = '1' OR `u`.`to_admin` = '1')
                                     AND `s`.`page_id` = '" . (int) $comment['page_id'] . "'
                                     AND `s`.`is_confirmed` = '1'");
 
@@ -388,32 +384,29 @@ class Notify
 
             foreach ($users as $user) {
                 if (in_array($user['id'], $this->users)) { // if the user has not already received an email
-                    if ($user['format'] == 'text') {
-                        $body = $email['text'];
-                    } else {
-                        $body = $email['html'];
-                    }
-
                     $subject = $this->security->decode(str_ireplace('[name]', $user['name'], $email['subject']));
 
-                    $body = str_ireplace('[name]', $user['name'], $body);
-                    $body = str_ireplace('[page reference]', $user['page_reference'], $body);
-                    $body = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $body);
-                    $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $body);
-                    $body = str_ireplace('[poster]', $comment['name'], $body);
-                    $body = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $body);
+                    $text = str_ireplace('[name]', $user['name'], $email['text']);
+                    $text = str_ireplace('[page reference]', $user['page_reference'], $text);
+                    $text = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $text);
+                    $text = str_ireplace('[poster]', $comment['name'], $text);
+                    $text = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $text);
+                    $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                    $text = $this->security->decode($text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                    if ($user['format'] == 'text') {
-                        $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                    } else {
-                        $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                    }
+                    $html = str_ireplace('[name]', $user['name'], $email['html']);
+                    $html = str_ireplace('[page reference]', $user['page_reference'], $html);
+                    $html = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $html);
+                    $html = str_ireplace('[poster]', $comment['name'], $html);
+                    $html = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $html);
+                    $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                    $html = $this->security->decode($html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                    $body = $this->security->decode($body);
-
-                    $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $user['format']), $body);
-
-                    $this->email->send($user['email'], $user['name'], $subject, $body, $user['format'], $this->page->getSiteId());
+                    $this->email->send($user['email'], $user['name'], $subject, $text, $html, $user['format'], $this->page->getSiteId());
 
                     $this->sent_to++;
 
@@ -430,7 +423,8 @@ class Notify
                                     FROM `" . CMTX_DB_PREFIX . "users` `u`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "subscriptions` `s` ON `u`.`id` = `s`.`user_id`
                                     LEFT JOIN `" . CMTX_DB_PREFIX . "pages` `p` ON `s`.`page_id` = `p`.`id`
-                                    WHERE `u`.`to_all` = '1'
+                                    WHERE `u`.`email` != ''
+                                    AND `u`.`to_all` = '1'
                                     AND `s`.`page_id` = '" . (int) $comment['page_id'] . "'
                                     AND `s`.`is_confirmed` = '1'");
 
@@ -441,32 +435,29 @@ class Notify
 
             foreach ($users as $user) {
                 if (in_array($user['id'], $this->users)) { // if the user has not already received an email
-                    if ($user['format'] == 'text') {
-                        $body = $email['text'];
-                    } else {
-                        $body = $email['html'];
-                    }
-
                     $subject = $this->security->decode(str_ireplace('[name]', $user['name'], $email['subject']));
 
-                    $body = str_ireplace('[name]', $user['name'], $body);
-                    $body = str_ireplace('[page reference]', $user['page_reference'], $body);
-                    $body = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $body);
-                    $body = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $body);
-                    $body = str_ireplace('[poster]', $comment['name'], $body);
-                    $body = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $body);
+                    $text = str_ireplace('[name]', $user['name'], $email['text']);
+                    $text = str_ireplace('[page reference]', $user['page_reference'], $text);
+                    $text = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $text);
+                    $text = str_ireplace('[poster]', $comment['name'], $text);
+                    $text = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $text);
+                    $text = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $text);
+                    $text = $this->security->decode($text);
+                    $text = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'text'), $text);
 
-                    if ($user['format'] == 'text') {
-                        $body = str_ireplace('[signature]', $this->email->getSignatureText($this->page->getSiteId()), $body);
-                    } else {
-                        $body = str_ireplace('[signature]', $this->security->decode($this->email->getSignatureHtml($this->page->getSiteId())), $body);
-                    }
+                    $html = str_ireplace('[name]', $user['name'], $email['html']);
+                    $html = str_ireplace('[page reference]', $user['page_reference'], $html);
+                    $html = str_ireplace('[page url]', $this->prepareUrl($user['page_url']), $html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose'). ' url]', $this->prepareUrl($this->comment->buildCommentUrl($comment['id'], $user['page_url'])), $html);
+                    $html = str_ireplace('[poster]', $comment['name'], $html);
+                    $html = str_ireplace('[user url]', $this->prepareUrl($this->buildUserUrl($user['token'])), $html);
+                    $html = str_ireplace('[signature]', $this->email->getSignatureHtml($this->page->getSiteId()), $html);
+                    $html = $this->security->decode($html);
+                    $html = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], 'html'), $html);
 
-                    $body = $this->security->decode($body);
-
-                    $body = str_ireplace('[' . $this->setting->get('purpose') . ']', $this->prepareComment($comment['comment'], $user['format']), $body);
-
-                    $this->email->send($user['email'], $user['name'], $subject, $body, $user['format'], $this->page->getSiteId());
+                    $this->email->send($user['email'], $user['name'], $subject, $text, $html, $user['format'], $this->page->getSiteId());
 
                     $this->sent_to++;
 

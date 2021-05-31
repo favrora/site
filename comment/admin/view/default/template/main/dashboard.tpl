@@ -92,11 +92,11 @@
                 <?php if ($licence_result == 'valid') { ?>
                     <?php echo $licence; ?>
                 <?php } else if ($licence_result == 'none') { ?>
-                    <span class="negative"><?php echo $lang_text_no_licence; ?></span> (<a href="https://www.commentics.org/pricing" target="_blank"><?php echo $lang_text_purchase; ?></a>)
+                    <span class="negative"><?php echo $lang_text_no_licence; ?></span> (<a href="https://commentics.com/pricing" target="_blank"><?php echo $lang_text_purchase; ?></a>)
                 <?php } else if ($licence_result == 'unable') { ?>
                     <span class="negative"><?php echo $lang_text_unable; ?></span>
                 <?php } else if ($licence_result == 'invalid') { ?>
-                    <span class="negative"><?php echo $lang_text_licence_invalid; ?></span> (<a href="https://www.commentics.org/pricing" target="_blank"><?php echo $lang_text_purchase; ?></a>)
+                    <span class="negative"><?php echo $lang_text_licence_invalid; ?></span> (<a href="https://commentics.com/pricing" target="_blank"><?php echo $lang_text_purchase; ?></a>)
                 <?php } ?>
             </div>
         </div>
@@ -266,22 +266,6 @@
     // ]]>
     </script>
     <?php } ?>
-
-    <script>
-    // <![CDATA[
-    $(document).ready(function() {
-        $('div.warning a:last-child').click(function(e) {
-            e.preventDefault();
-
-            $.ajax({
-                url: 'index.php?route=main/dashboard/dismiss',
-            })
-
-            $('div.warning').fadeOut(2000);
-        });
-    });
-    // ]]>
-    </script>
 
 </div>
 

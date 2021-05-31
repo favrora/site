@@ -71,17 +71,19 @@
     position: absolute;
 }
 
-.cmtx_gravatar_area {
+.cmtx_avatar_area {
     display: inline-block;
     float: left;
     margin-right: 10px;
     position: relative;
 }
 
-.cmtx_gravatar_area img {
+.cmtx_avatar_area img {
+    height: 72px;
     max-width: 100%;
     position: relative;
     vertical-align: middle;
+    width: 72px;
 }
 
 .cmtx_level {
@@ -100,7 +102,7 @@
 .cmtx_bio {
     background-color: $white;
     border: 1px solid $grey-light;
-    bottom: -130px;
+    bottom: -100px;
     display: none;
     left: 20%;
     padding: 10px;
@@ -118,8 +120,14 @@
     text-overflow: ellipsis;
 }
 
+.cmtx_bio img {
+    height: 158px;
+    width: 158px;
+}
+
 .cmtx_bio_info {
     margin-top: 5px;
+    text-align: left;
 }
 
 .cmtx_bio_info div {
@@ -302,8 +310,26 @@
     width: auto;
 }
 
-.cmtx_upload_area img:not(:last-child) {
-    padding-right: 10px;
+.cmtx_comments_container .cmtx_upload_area a {
+    cursor: pointer;
+}
+
+.cmtx_upload_area a {
+    text-decoration: none;
+}
+
+.cmtx_upload_area a:not(:last-child) {
+    margin-right: 10px;
+}
+
+.cmtx_lightbox_modal.cmtx_modal_box .cmtx_modal_body {
+    max-height: none;
+}
+
+.cmtx_lightbox_modal .cmtx_lightbox_image {
+    max-height: 80vh;
+    max-width: 80vw;
+    min-width: 200px;
 }
 
 .cmtx_date_and_action_area {
@@ -598,7 +624,7 @@
         margin-left: 0 !important;
     }
 
-    .cmtx_gravatar_area {
+    .cmtx_avatar_area {
         float: none;
         margin-right: 0;
     }
@@ -926,6 +952,10 @@
 }
 
 /* Topic */
+
+.cmtx_topic_block {
+    overflow: auto;
+}
 
 .cmtx_topic_intro {
     font-weight: normal;

@@ -55,6 +55,7 @@ $_['lang_modal_flag_heading']      = 'Report Comment';
 $_['lang_modal_flag_content']      = 'Are you sure you want to report it?';
 $_['lang_modal_yes']               = 'Yes';
 $_['lang_modal_no']                = 'No';
+$_['lang_modal_close']             = 'Close';
 
 // Link
 $_['lang_link_close']              = 'Close';

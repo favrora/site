@@ -71,7 +71,7 @@ class ToolUpgradeController extends Controller
 
                     $version = str_replace('.', '-', $version);
 
-                    $json['messages'][] = sprintf($this->data['lang_text_download'], 'https://www.commentics.org/package/commentics-' . $version . '.zip');
+                    $json['messages'][] = sprintf($this->data['lang_text_download'], 'https://commentics.com/package/commentics-' . $version . '.zip');
 
                     // Name of the temp folder to store the uploaded zip file
                     $temp_folder = CMTX_DIR_UPLOAD . 'temp-' . $this->variable->random();
@@ -116,6 +116,8 @@ class ToolUpgradeController extends Controller
 
         $this->loadModel('tool/upgrade');
 
+        sleep(3); // Sleep for 3 seconds to help avoid triggering DoS detection
+
         if ($this->request->isAjax()) {
             $this->response->addHeader('Content-Type: application/json');
 
@@ -155,6 +157,8 @@ class ToolUpgradeController extends Controller
         $this->loadLanguage('tool/upgrade');
 
         $this->loadModel('tool/upgrade');
+
+        sleep(3); // Sleep for 3 seconds to help avoid triggering DoS detection
 
         if ($this->request->isAjax()) {
             $this->response->addHeader('Content-Type: application/json');
@@ -196,6 +200,8 @@ class ToolUpgradeController extends Controller
 
         $this->loadModel('tool/upgrade');
 
+        sleep(3); // Sleep for 3 seconds to help avoid triggering DoS detection
+
         if ($this->request->isAjax()) {
             $this->response->addHeader('Content-Type: application/json');
 
@@ -235,6 +241,8 @@ class ToolUpgradeController extends Controller
         $this->loadLanguage('tool/upgrade');
 
         $this->loadModel('tool/upgrade');
+
+        sleep(3); // Sleep for 3 seconds to help avoid triggering DoS detection
 
         if ($this->request->isAjax()) {
             $this->response->addHeader('Content-Type: application/json');
@@ -279,6 +287,8 @@ class ToolUpgradeController extends Controller
         $this->loadLanguage('tool/upgrade');
 
         $this->loadModel('tool/upgrade');
+
+        sleep(3); // Sleep for 3 seconds to help avoid triggering DoS detection
 
         if ($this->request->isAjax()) {
             $this->response->addHeader('Content-Type: application/json');
@@ -396,9 +406,9 @@ class ToolUpgradeController extends Controller
 
         remove_directory(CMTX_DIR_INSTALL);
 
-        remove_directory(CMTX_DIR_CACHE . 'database/', false);
-        remove_directory(CMTX_DIR_CACHE . 'modification/', false);
-        remove_directory(CMTX_DIR_CACHE . 'template/', false);
+        remove_directory(CMTX_DIR_CACHE . 'database/', false, false);
+        remove_directory(CMTX_DIR_CACHE . 'modification/', false, false);
+        remove_directory(CMTX_DIR_CACHE . 'template/', false, false);
 
         unset($this->session->data['cmtx_upgrade_info']);
     }

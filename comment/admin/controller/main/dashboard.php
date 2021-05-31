@@ -19,12 +19,14 @@ class MainDashboardController extends Controller
             }
         }
 
-        if (!isset($this->session->data['cmtx_hide_dashboard_notice'])) {
-            if ($this->model_main_dashboard->getNumCommentsApprove()) {
-                $this->data['warning'] = sprintf($this->data['lang_message_comments'], $this->url->link('manage/comments', '&filter_approved=0'));
-            } else if ($this->model_main_dashboard->hasErrors()) {
-                $this->data['warning'] = sprintf($this->data['lang_message_errors'], $this->url->link('report/errors'));
-            }
+        if ($this->setting->get('avatar_type') == 'upload' && $this->model_main_dashboard->getNumCommentsApprove() && $this->model_main_dashboard->getNumAvatarsApprove()) {
+            $this->data['warning'] = sprintf($this->data['lang_message_approval'], $this->url->link('manage/comments', '&filter_approved=0'), $this->url->link('manage/users', '&filter_avatar_approved=0'));
+        } else if ($this->model_main_dashboard->getNumCommentsApprove()) {
+            $this->data['warning'] = sprintf($this->data['lang_message_comments'], $this->url->link('manage/comments', '&filter_approved=0'));
+        } else if ($this->setting->get('avatar_type') == 'upload' && $this->model_main_dashboard->getNumAvatarsApprove()) {
+            $this->data['warning'] = sprintf($this->data['lang_message_avatars'], $this->url->link('manage/users', '&filter_avatar_approved=0'));
+        } else if ($this->model_main_dashboard->hasErrors()) {
+            $this->data['warning'] = sprintf($this->data['lang_message_errors'], $this->url->link('report/errors'));
         }
 
         $site_issue = false;
@@ -55,23 +57,13 @@ class MainDashboardController extends Controller
             } else {
                 $site_issue = true;
 
-                if (is_string($latest_version) && $this->variable->stripos($latest_version, 'bitninja') !== false) {
-                    $this->data['version_check'] = array(
-                        'type'        => 'negative',
-                        'text'        => $this->data['lang_text_denied'],
-                        'link_href'   => 'https://www.commentics.org/help/main_dashboard',
-                        'link_text'   => $this->data['lang_link_learn_more'],
-                        'link_target' => '_blank'
-                    );
-                } else {
-                    $this->data['version_check'] = array(
-                        'type'        => 'negative',
-                        'text'        => $this->data['lang_text_site_issue'],
-                        'link_href'   => $this->url->link('report/version_check'),
-                        'link_text'   => $this->data['lang_link_log'],
-                        'link_target' => '_self'
-                    );
-                }
+                $this->data['version_check'] = array(
+                    'type'        => 'negative',
+                    'text'        => $this->data['lang_text_site_issue'],
+                    'link_href'   => $this->url->link('report/version_check'),
+                    'link_text'   => $this->data['lang_link_log'],
+                    'link_target' => '_self'
+                );
             }
         } else {
             $this->data['version_check'] = array(
@@ -146,7 +138,7 @@ class MainDashboardController extends Controller
             $this->data['licence_result'] = 'none';
 
             if ($this->model_main_dashboard->getDaysInstalled() >= 10) {
-                $this->data['info'] = sprintf($this->data['lang_notice'], 'https://www.commentics.org/pricing');
+                $this->data['info'] = sprintf($this->data['lang_notice'], 'https://commentics.com/pricing');
             }
         }
 
@@ -214,11 +206,6 @@ class MainDashboardController extends Controller
         $this->components = array('common/header', 'common/footer');
 
         $this->loadView('main/dashboard');
-    }
-
-    public function dismiss()
-    {
-        $this->session->data['cmtx_hide_dashboard_notice'] = true;
     }
 
     public function stopSystemDetect()

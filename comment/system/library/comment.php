@@ -57,43 +57,46 @@ class Comment
             $uploads = $this->getUploads($id);
 
             return array(
-                'id'              => $comment['id'],
-                'user_id'         => $comment['user_id'],
-                'page_id'         => $comment['page_id'],
-                'name'            => $comment['name'],
-                'email'           => $comment['email'],
-                'page_reference'  => $comment['reference'],
-                'page_url'        => $comment['url'],
-                'website'         => $comment['website'],
-                'town'            => $comment['town'],
-                'state_id'        => $comment['state_id'],
-                'state'           => $comment['state_name'],
-                'country_id'      => $comment['country_id'],
-                'country'         => $comment['country_name'],
-                'rating'          => $comment['rating'],
-                'reply_to'        => $comment['reply_to'],
-                'headline'        => $comment['headline'],
-                'comment'         => $comment['comment'],
-                'reply'           => $comment['reply'],
-                'ip_address'      => $comment['ip_address'],
-                'is_approved'     => $comment['is_approved'],
-                'notes'           => $comment['notes'],
-                'is_admin'        => $comment['is_admin'],
-                'is_sent'         => $comment['is_sent'],
-                'sent_to'         => $comment['sent_to'],
-                'likes'           => $comment['likes'],
-                'dislikes'        => $comment['dislikes'],
-                'reports'         => $comment['reports'],
-                'is_sticky'       => $comment['is_sticky'],
-                'is_locked'       => $comment['is_locked'],
-                'is_verified'     => $comment['is_verified'],
-                'date_modified'   => $comment['date_modified'],
-                'date_added'      => $comment['date_added'],
-                'token'           => $comment['token'],
-                'format'          => $comment['format'],
-                'to_approve'      => $comment['to_approve'],
-                'date_added_user' => $comment['date_added_user'],
-                'uploads'         => $uploads
+                'id'                 => $comment['id'],
+                'user_id'            => $comment['user_id'],
+                'page_id'            => $comment['page_id'],
+                'name'               => $comment['name'],
+                'email'              => $comment['email'],
+                'page_reference'     => $comment['reference'],
+                'page_url'           => $comment['url'],
+                'website'            => $comment['website'],
+                'town'               => $comment['town'],
+                'state_id'           => $comment['state_id'],
+                'state'              => $comment['state_name'],
+                'country_id'         => $comment['country_id'],
+                'country'            => $comment['country_name'],
+                'rating'             => $comment['rating'],
+                'reply_to'           => $comment['reply_to'],
+                'headline'           => $comment['headline'],
+                'comment'            => $comment['comment'],
+                'reply'              => $comment['reply'],
+                'ip_address'         => $comment['ip_address'],
+                'is_approved'        => $comment['is_approved'],
+                'notes'              => $comment['notes'],
+                'is_admin'           => $comment['is_admin'],
+                'is_sent'            => $comment['is_sent'],
+                'sent_to'            => $comment['sent_to'],
+                'likes'              => $comment['likes'],
+                'dislikes'           => $comment['dislikes'],
+                'reports'            => $comment['reports'],
+                'is_sticky'          => $comment['is_sticky'],
+                'is_locked'          => $comment['is_locked'],
+                'is_verified'        => $comment['is_verified'],
+                'date_modified'      => $comment['date_modified'],
+                'date_added'         => $comment['date_added'],
+                'token'              => $comment['token'],
+                'to_all'             => $comment['to_all'],
+                'to_admin'           => $comment['to_admin'],
+                'to_reply'           => $comment['to_reply'],
+                'to_approve'         => $comment['to_approve'],
+                'format'             => $comment['format'],
+                'date_added_user'    => $comment['date_added_user'],
+                'uploads'            => $uploads
             );
         } else {
             return false;
@@ -213,6 +216,23 @@ class Comment
         return $url;
     }
 
+    public function deleteUpload($upload_id)
+    {
+        $query = $this->db->query("SELECT * FROM `" . CMTX_DB_PREFIX . "uploads` WHERE `id` = '" . (int) $upload_id . "'");
+
+        $result = $this->db->row($query);
+
+        if ($result) {
+            $location = CMTX_DIR_UPLOAD . $result['folder'] . '/' . $result['filename'] . '.' . $result['extension'];
+
+            if (file_exists($location)) {
+                @unlink($location);
+            }
+        }
+
+        $this->db->query("DELETE FROM `" . CMTX_DB_PREFIX . "uploads` WHERE `id` = '" . (int) $upload_id . "'");
+    }
+
     private function deleteReplies($id)
     {
         $replies = $this->getReplies($id);
@@ -230,7 +250,7 @@ class Comment
 
     private function getUploads($comment_id)
     {
-        $query = $this->db->query("SELECT * FROM `" . CMTX_DB_PREFIX . "uploads` WHERE `comment_id` = '" . (int) $comment_id . "'");
+        $query = $this->db->query("SELECT * FROM `" . CMTX_DB_PREFIX . "uploads` WHERE `comment_id` = '" . (int) $comment_id . "' ORDER BY `date_added` DESC");
 
         $results = $this->db->rows($query);
 

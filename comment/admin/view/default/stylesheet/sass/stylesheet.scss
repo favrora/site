@@ -382,6 +382,11 @@ img.loading {
     color: #ffd700;
 }
 
+.avatar {
+    height: 72px;
+    width: 72px;
+}
+
 .clear::before, .clear::after {
     content: ' ';
     display: table;
@@ -562,9 +567,20 @@ img.loading {
     width: 300px;
 }
 
-.edit_comment_page img.upload {
+.edit_comment_page .upload_section {
+    display: inline-block;
+    line-height: normal;
+}
+
+.edit_comment_page .upload_image {
     height: 100px;
     width: 100px;
+}
+
+.edit_comment_page .upload_remove {
+    display: block;
+    line-height: normal;
+    text-align: center;
 }
 
 .edit_spam_page .section div:first-of-type {
@@ -1254,7 +1270,7 @@ div.warning {
     color: #9f6000;
 }
 
-div.info a:last-child, div.warning a:last-child {
+div.info a:not([href]):last-child, div.warning a:not([href]):last-child {
     color: #848484;
     cursor: pointer;
     float: right;

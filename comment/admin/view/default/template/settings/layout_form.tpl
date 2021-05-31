@@ -266,7 +266,9 @@
                     <input type="checkbox" name="enabled_counter" value="1" <?php if ($enabled_counter) { echo 'checked'; } ?>>
                     <a class="hint" onmouseover="showhint('<?php echo $lang_hint_counter; ?>', this, event, '')">[?]</a>
                 </div>
+            </div>
 
+            <div class="<?php echo ($enabled_headline ? 'element_enabled' : 'element_disabled') ?>">
                 <h2><?php echo $lang_subheading_headline; ?></h2>
 
                 <div class="fieldset">
@@ -299,7 +301,9 @@
                         <span class="error"><?php echo $error_headline_maximum_characters; ?></span>
                     <?php } ?>
                 </div>
+            </div>
 
+            <div class="<?php echo ($enabled_upload ? 'element_enabled' : 'element_disabled') ?>">
                 <h2><?php echo $lang_subheading_upload; ?></h2>
 
                 <div class="fieldset">
@@ -310,7 +314,7 @@
 
                 <div class="fieldset">
                     <label><?php echo $lang_entry_max_size; ?></label>
-                    <input type="text" required name="maximum_upload_size" class="small" value="<?php echo $maximum_upload_size; ?>" maxlength="2">
+                    <input type="text" required name="maximum_upload_size" class="small" value="<?php echo $maximum_upload_size; ?>" maxlength="3">
                     <span class="note"><?php echo $lang_note_mb; ?></span>
                     <a class="hint" onmouseover="showhint('<?php echo $lang_hint_max_size; ?>', this, event, '')">[?]</a>
                     <?php if ($error_maximum_upload_size) { ?>
@@ -329,7 +333,7 @@
 
                 <div class="fieldset">
                     <label><?php echo $lang_entry_max_total; ?></label>
-                    <input type="text" required name="maximum_upload_total" class="small" value="<?php echo $maximum_upload_total; ?>" maxlength="2">
+                    <input type="text" required name="maximum_upload_total" class="small" value="<?php echo $maximum_upload_total; ?>" maxlength="3">
                     <span class="note"><?php echo $lang_note_mb; ?></span>
                     <a class="hint" onmouseover="showhint('<?php echo $lang_hint_max_total; ?>', this, event, '')">[?]</a>
                     <?php if ($error_maximum_upload_total) { ?>
@@ -733,7 +737,7 @@
                 </div>
             </div>
 
-            <div class="<?php echo ($enabled_question || $enabled_captcha ? 'element_enabled' : 'element_disabled') ?>">
+            <div class="<?php echo ($enabled_question ? 'element_enabled' : 'element_disabled') ?>">
                 <h2><?php echo $lang_subheading_question; ?></h2>
 
                 <div class="fieldset">
@@ -746,7 +750,9 @@
                     <label><?php echo $lang_entry_list; ?></label>
                     <a href="<?php echo $link_questions; ?>"><?php echo $lang_link_edit; ?></a>
                 </div>
+            </div>
 
+            <div class="<?php echo ($enabled_captcha ? 'element_enabled' : 'element_disabled') ?>">
                 <h2><?php echo $lang_subheading_captcha; ?></h2>
 
                 <div class="fieldset">
@@ -998,6 +1004,49 @@
 
         <div class="buttons"><input type="submit" class="button" value="<?php echo $lang_button_update; ?>" title="<?php echo $lang_button_update; ?>"></div>
     </form>
+
+    <?php if ($layout_detect && $layout_settings) { ?>
+        <div id="layout_settings_dialog" title="<?php echo $lang_dialog_title; ?>" style="display:none">
+            <span class="ui-icon ui-icon-alert"></span> <?php echo $lang_dialog_content; ?>
+
+            <ul>
+                <?php foreach ($layout_settings as $layout_setting) { ?>
+                    <li><?php echo $layout_setting; ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+    <?php } ?>
+
+    <?php if ($layout_detect && $layout_settings) { ?>
+    <script>
+    // <![CDATA[
+    $(document).ready(function() {
+        $('#layout_settings_dialog').dialog({
+            modal: true,
+            height: 'auto',
+            width: 'auto',
+            resizable: false,
+            draggable: false,
+            center: true,
+            buttons: {
+                '<?php echo $lang_dialog_stop; ?>': function() {
+                    $.ajax({
+                        url: 'index.php?route=settings/layout_form/stopLayoutDetect',
+                    })
+
+                    $(this).dialog('close');
+                },
+                '<?php echo $lang_dialog_close; ?>': function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        $('#layout_settings_dialog').dialog('open');
+    });
+    // ]]>
+    </script>
+    <?php } ?>
 
     <script>
     // <![CDATA[

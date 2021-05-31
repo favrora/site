@@ -81,6 +81,12 @@ class ManageCommentsController extends Controller
             unset($this->session->data['cmtx_success']);
         }
 
+        if (isset($this->session->data['cmtx_error'])) {
+            $this->data['error'] = $this->session->data['cmtx_error'];
+
+            unset($this->session->data['cmtx_error']);
+        }
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
         } else {
@@ -311,6 +317,10 @@ class ManageCommentsController extends Controller
         if ($this->setting->get('notice_manage_comments')) {
             $this->data['info'] = $this->data['lang_notice'];
         }
+
+        $this->data['enabled_rating'] = $this->setting->get('enabled_rating');
+
+        $this->data['show_rating'] = $this->setting->get('show_rating');
 
         $this->data['approve_notifications'] = $this->setting->get('approve_notifications');
 

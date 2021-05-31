@@ -139,7 +139,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
                 jQuery('.cmtx_form_container select').children().css('color', 'black');
             }
 
-            jQuery('body').on('change', '.cmtx_form_container select', function () {
+            jQuery('body').on('change', '.cmtx_form_container select', function() {
                 if (jQuery(this).find('option:selected').val() == '') {
                     jQuery(this).css('color', '#666');
                     jQuery(this).children().css('color', 'black');
@@ -343,15 +343,11 @@ var cmtx_wait_for_jquery = setInterval(function() {
 
             /* Update the comment counter whenever anything is entered */
             jQuery('#cmtx_comment').keyup(function(e) {
-                var length = jQuery(this).val().length;
-
-                var maximum = jQuery(this).attr('maxlength');
-
-                jQuery('#cmtx_counter').html(maximum - length);
+                cmtxUpdateCommentCounter();
             });
 
             /* Simulate entering a comment on page load to update the counter in case it has default text */
-            jQuery('#cmtx_comment').trigger('keyup');
+            cmtxUpdateCommentCounter();
 
             /* Allows the user to deselect the star rating */
             jQuery('input[type="radio"][name="cmtx_rating"]').on('click', function() {
@@ -493,7 +489,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
                         }
 
                         if (size > cmtx_js_settings_form.maximum_upload_size) {
-                            jQuery('#cmtx_upload_modal .cmtx_modal_body').html('<span class="cmtx_icon cmtx_alert_icon" aria-hidden="true"></span> ' + cmtx_js_settings_form.lang_error_file_size.replace('%d', cmtx_js_settings_form.maximum_upload_size));
+                            jQuery('#cmtx_upload_modal .cmtx_modal_body').html('<span class="cmtx_icon cmtx_alert_icon" aria-hidden="true"></span> ' + cmtx_js_settings_form.lang_error_file_size.replace('%.1f', cmtx_js_settings_form.maximum_upload_size));
 
                             jQuery('body').append(jQuery('#cmtx_upload_modal'));
 
@@ -515,7 +511,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
                         }
 
                         if (total_size > cmtx_js_settings_form.maximum_upload_total) {
-                            jQuery('#cmtx_upload_modal .cmtx_modal_body').html('<span class="cmtx_icon cmtx_alert_icon" aria-hidden="true"></span> ' + cmtx_js_settings_form.lang_error_file_total.replace('%d', cmtx_js_settings_form.maximum_upload_total));
+                            jQuery('#cmtx_upload_modal .cmtx_modal_body').html('<span class="cmtx_icon cmtx_alert_icon" aria-hidden="true"></span> ' + cmtx_js_settings_form.lang_error_file_total.replace('%.1f', cmtx_js_settings_form.maximum_upload_total));
 
                             jQuery('body').append(jQuery('#cmtx_upload_modal'));
 
@@ -790,7 +786,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
                 });
 
                 request.done(function(response) {
-                    jQuery('.cmtx_message_success, .cmtx_message_error, .cmtx_error').remove();
+                    jQuery('.cmtx_message:not(.cmtx_message_reply), .cmtx_error').remove();
 
                     jQuery('.cmtx_field, .cmtx_rating').removeClass('cmtx_field_error');
 
@@ -803,7 +799,11 @@ var cmtx_wait_for_jquery = setInterval(function() {
                     }
 
                     if (response['result']['success']) {
-                        jQuery('#cmtx_comment, #cmtx_answer, #cmtx_securimage').val('');
+                        jQuery('.cmtx_message').remove();
+
+                        jQuery('#cmtx_comment, #cmtx_headline, #cmtx_answer, #cmtx_securimage').val('');
+
+                        cmtxUpdateCommentCounter();
 
                         jQuery('.cmtx_image_upload').remove();
 
@@ -827,7 +827,13 @@ var cmtx_wait_for_jquery = setInterval(function() {
 
                         jQuery('#cmtx_form').before('<div class="cmtx_message cmtx_message_success">' + response['result']['success'] + '</div>');
 
-                        jQuery('.cmtx_message_success').fadeIn(1500).delay(3000).fadeOut(1000);
+                        jQuery('.cmtx_message_success').fadeIn(1500);
+
+                        if (response['user_link']) {
+                            jQuery('#cmtx_form').before('<div class="cmtx_message cmtx_message_info">' + response['user_link'] + '</div>');
+
+                            jQuery('.cmtx_message_info').fadeIn(1500);
+                        }
 
                         var options = {
                             'commentics_url': cmtx_js_settings_form.commentics_url,
@@ -937,12 +943,12 @@ var cmtx_wait_for_jquery = setInterval(function() {
                 });
             });
 
-            /* Show a bio popup when hovering over the Gravatar image */
-            jQuery('body').on('mouseenter', '.cmtx_gravatar_area', function() {
+            /* Show a bio popup when hovering over the avatar image */
+            jQuery('body').on('mouseenter', '.cmtx_avatar_area', function() {
                 jQuery(this).find('.cmtx_bio').stop(true, true).fadeIn(750);
             });
 
-            jQuery('body').on('mouseleave', '.cmtx_gravatar_area', function() {
+            jQuery('body').on('mouseleave', '.cmtx_avatar_area', function() {
                 jQuery(this).find('.cmtx_bio').stop(true, true).fadeOut(500);
             });
 
@@ -1093,7 +1099,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
 
                 jQuery('.cmtx_wait_for_user').show();
 
-                jQuery('.cmtx_icons_row, .cmtx_comment_row, .cmtx_counter_row, .cmtx_upload_row, .cmtx_image_row, .cmtx_rating_row, .cmtx_website_row, .cmtx_geo_row, .cmtx_checkbox_container, .cmtx_button_row').hide();
+                jQuery('.cmtx_icons_row, .cmtx_comment_row, .cmtx_counter_row, .cmtx_headline_row, .cmtx_upload_row, .cmtx_image_row, .cmtx_rating_row, .cmtx_website_row, .cmtx_geo_row, .cmtx_checkbox_container, .cmtx_button_row').hide();
 
                 jQuery('.cmtx_question_row, .cmtx_securimage_row').show();
 
@@ -1101,9 +1107,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
                     cmtx_heading_text = jQuery('.cmtx_form_heading').text();
                 }
 
-                jQuery('.cmtx_form_heading').fadeOut(500, function() {
-                    jQuery('.cmtx_form_heading').text(cmtx_js_settings_notify.lang_heading_notify).fadeIn(500);
-                });
+                jQuery('.cmtx_form_heading').text(cmtx_js_settings_notify.lang_heading_notify);
 
                 var notify_button = '';
 
@@ -1193,7 +1197,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
 
                         jQuery('#cmtx_form').before('<div class="cmtx_message cmtx_message_success">' + response['result']['success'] + '</div>');
 
-                        jQuery('.cmtx_message_success').fadeIn(1500).delay(3000).fadeOut(1000);
+                        jQuery('.cmtx_message_success').fadeIn(1500);
                     }
 
                     if (response['result']['error']) {
@@ -1245,23 +1249,19 @@ var cmtx_wait_for_jquery = setInterval(function() {
             });
 
             function cmtx_cancel_notify() {
-                jQuery('.cmtx_message:not(.cmtx_message_notify), .cmtx_error, .cmtx_subscribe_row').remove();
+                jQuery('.cmtx_message, .cmtx_error, .cmtx_subscribe_row').remove();
 
                 jQuery('.cmtx_field, .cmtx_rating').removeClass('cmtx_field_error');
 
-                jQuery('.cmtx_icons_row, .cmtx_comment_row, .cmtx_counter_row, .cmtx_upload_row, .cmtx_rating_row, .cmtx_website_row, .cmtx_geo_row, .cmtx_question_row, .cmtx_securimage_row, .cmtx_checkbox_container, .cmtx_button_row').show();
+                jQuery('.cmtx_icons_row, .cmtx_comment_row, .cmtx_counter_row, .cmtx_headline_row, .cmtx_upload_row, .cmtx_rating_row, .cmtx_website_row, .cmtx_geo_row, .cmtx_question_row, .cmtx_securimage_row, .cmtx_checkbox_container, .cmtx_button_row').show();
 
                 jQuery('#cmtx_comment').addClass('cmtx_comment_field_active');
 
                 jQuery('.cmtx_comment_container').addClass('cmtx_comment_container_active');
 
-                jQuery('.cmtx_form_heading').fadeOut(250, function() {
-                    jQuery('.cmtx_form_heading').text(cmtx_heading_text).fadeIn(500);
-                });
+                jQuery('.cmtx_form_heading').text(cmtx_heading_text);
 
                 jQuery('input[name="cmtx_subscribe"]').val('');
-
-                jQuery('.cmtx_message_notify').fadeOut(500);
             }
 
             /* Like or dislike a comment */
@@ -1466,6 +1466,27 @@ var cmtx_wait_for_jquery = setInterval(function() {
                 jQuery('.cmtx_message_reply').text(cmtx_js_settings_comments.lang_text_not_replying);
             });
 
+            /* Lightbox for comment uploads */
+            jQuery('#cmtx_container').on('click', '.cmtx_comments_container .cmtx_upload_area a', function(e) {
+                var src = jQuery(this).find('img').attr('src');
+
+                if (isInIframe) {
+                    jQuery(this).attr('href', src);
+                } else {
+                    e.preventDefault();
+
+                    jQuery('#cmtx_lightbox_modal .cmtx_modal_body').html('<img src="' + src + '" class="cmtx_lightbox_image">');
+
+                    jQuery('body').append(jQuery('#cmtx_lightbox_modal'));
+
+                    jQuery('body').append('<div class="cmtx_overlay"></div>');
+
+                    jQuery('.cmtx_overlay').fadeIn(200);
+
+                    jQuery('#cmtx_lightbox_modal').fadeIn(200);
+                }
+            });
+
             /* Load more comments button */
             jQuery('#cmtx_container').on('click', '#cmtx_more_button', function(e) {
                 e.preventDefault();
@@ -1572,6 +1593,110 @@ var cmtx_wait_for_jquery = setInterval(function() {
             /* User Page */
 
             if (typeof(cmtx_js_settings_user) != 'undefined') {
+                /* Show an avatar selection modal */
+                jQuery('#cmtx_avatar_selection_link').click(function(e) {
+                    e.preventDefault();
+
+                    jQuery('body').append('<div class="cmtx_overlay"></div>');
+
+                    jQuery('.cmtx_overlay').fadeIn(200);
+
+                    jQuery('#cmtx_avatar_selection_modal').fadeIn(200);
+                });
+
+                jQuery('.cmtx_avatar_selection_img').click(function(e) {
+                    e.preventDefault();
+
+                    var src = jQuery(this).attr('src');
+
+                    jQuery('.cmtx_avatar_image').attr('src', src);
+
+                    jQuery('.cmtx_avatar_image_links').show();
+
+                    jQuery('.cmtx_modal_close').trigger('click');
+                });
+
+                var readURL = function(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            jQuery('.cmtx_avatar_image').attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(input.files[0]);
+
+                        jQuery('.cmtx_avatar_image_links').show();
+                    }
+                }
+
+                jQuery('#cmtx_avatar_image_input').on('change', function() {
+                    readURL(this);
+                });
+
+                jQuery('#cmtx_avatar_upload_link').on('click', function(e) {
+                    e.preventDefault();
+
+                   jQuery('#cmtx_avatar_image_input').click();
+                });
+
+                jQuery('#cmtx_avatar_save_link').on('click', function(e) {
+                    e.preventDefault();
+
+                    var avatar_type = jQuery('.cmtx_avatar_image').attr('data-type');
+
+                    var formData = new FormData();
+
+                    formData.append('u-t', cmtx_js_settings_user.token);
+
+                    if (avatar_type == 'selection') {
+                        formData.append('avatar', jQuery('.cmtx_avatar_image').attr('src'));
+                        var method = 'saveSelectedAvatar';
+                    } else {
+                        formData.append('avatar', jQuery('#cmtx_avatar_image_input')[0].files[0]);
+                        var method = 'saveUploadedAvatar';
+                    }
+
+                    var request = jQuery.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: cmtx_js_settings_user.commentics_url + 'frontend/index.php?route=main/user/' + method,
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            jQuery('.cmtx_message').remove();
+
+                            jQuery('form').before('<div class="cmtx_message cmtx_message_info">' + cmtx_js_settings_user.lang_text_saving + '</div>');
+
+                            jQuery('.cmtx_message').show();
+                        }
+                    });
+
+                    request.done(function(response) {
+                        cmtxAutoScroll(jQuery('.cmtx_user_container'));
+
+                        setTimeout(function() {
+                            jQuery('.cmtx_message').remove();
+
+                            if (response['success']) {
+                                jQuery('form').before('<div class="cmtx_message cmtx_message_success">' + response['success'] + '</div>');
+
+                                jQuery('.cmtx_message').show();
+
+                                jQuery('.cmtx_avatar_image_links').hide();
+                            }
+
+                            if (response['error']) {
+                                jQuery('form').before('<div class="cmtx_message cmtx_message_error">' + response['error'] + '</div>');
+
+                                jQuery('.cmtx_message').show();
+                            }
+                        }, 1000);
+                    });
+                });
+
                 if (cmtx_js_settings_user.to_all) {
                     jQuery('#cmtx_user_container .cmtx_notifications_area_custom').hide();
                 } else {
@@ -1588,7 +1713,7 @@ var cmtx_wait_for_jquery = setInterval(function() {
 
                 cmtxTimeago();
 
-                jQuery('#cmtx_user_container input').change(function(e) {
+                jQuery('#cmtx_user_container .cmtx_settings_container input').change(function(e) {
                     var request = jQuery.ajax({
                         type: 'POST',
                         cache: false,
@@ -1926,6 +2051,17 @@ function cmtxAutoScroll(element) {
     }
 }
 
+/* Update the comment counter */
+function cmtxUpdateCommentCounter() {
+    if (jQuery('#cmtx_comment').length) {
+        var length = jQuery('#cmtx_comment').val().length;
+
+        var maximum = jQuery('#cmtx_comment').attr('maxlength');
+
+        jQuery('#cmtx_counter').html(maximum - length);
+    }
+}
+
 /* Adds a tag (BB Code or Smiley) to the comment field */
 function cmtx_add_tag(start, end) {
     var obj = document.getElementById('cmtx_comment');
@@ -1948,7 +2084,7 @@ function cmtx_add_tag(start, end) {
         jQuery('#cmtx_comment').val(start + end);
     }
 
-    jQuery('#cmtx_comment').trigger('keyup'); // update the counter
+    cmtxUpdateCommentCounter();
 
     jQuery('#cmtx_comment').focus();
 }

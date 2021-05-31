@@ -20,7 +20,7 @@
   <meta property="og:site_name" content="Favrora">
   <meta property="og:url" content="https://favrora.com/blog/">
   <meta property="og:image" content="https://favrora.com/src/img/blog/">
-  <meta property="article:published_time" content="2021-04-02">
+  <meta property="article:published_time" content="2021-05-30">
   <meta property="article:author" content="https://www.linkedin.com/in/favrora/">
   <meta property="og:locale" content="en_US">
 
@@ -65,7 +65,7 @@ add_view($conn, $visitor_ip, $page_id);
 
     <h1></h1>
     <span class="date">
-      2 April 2021 | Author: Alina Nikolaevna |
+      30 May 2021 | Author: Alina Nikolaevna |
       <?php
       $total_page_views = total_views($conn, $page_id); // Returns total views of this page
       echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views;
@@ -77,7 +77,11 @@ add_view($conn, $visitor_ip, $page_id);
 
   </div>
 
-  <?php include $_SERVER['DOCUMENT_ROOT'].'/content/ads/box.php' ?>
+  <?php
+  $cmtx_identifier = '24';
+  $cmtx_reference  = 'Page name';
+  include $_SERVER['DOCUMENT_ROOT'].'/content/ads/box.php';
+  ?>
 
 </div>
 <!--/Content Section -->
@@ -106,8 +110,8 @@ add_view($conn, $visitor_ip, $page_id);
         "url": "https://favrora.com/src/img/icon.png"
       }
     },
-    "datePublished": "2021-04-02",
-    "dateModified": "2021-04-16"
+    "datePublished": "2021-05-30",
+    "dateModified": "2021-05-30"
   }
 </script>
 

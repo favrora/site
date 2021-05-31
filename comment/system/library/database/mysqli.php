@@ -25,7 +25,9 @@ class MySqli
             if ($this->link) {
                 $this->connected = true;
 
-                mysqli_set_charset($this->link, 'utf8');
+                mysqli_set_charset($this->link, 'utf8mb4');
+
+                $this->query("SET SQL_MODE = ''");
 
                 if ($this->numRows($this->query("SHOW TABLES LIKE '" . $prefix . "comments'"))) {
                     $this->installed = true;
