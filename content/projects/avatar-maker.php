@@ -61,7 +61,11 @@
         <a href="https://avatarx.netlify.app/" target="_blank">Demo version of the project</a>
       </p>
 
+      <!--
       <iframe src="https://funding.webmoney.ru/widgets/vertical/14b0e43c-551f-4b45-bdf1-163758f0f8cf?bt=0&hc=1&hs=1&sum=10" width="240" height="190" scrolling="no" style="border:none;"></iframe>
+      -->
+
+      <iframe src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=Avatar%20Maker&targets-hint=&default-sum=1000&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410018746589830" width="100%" height="223" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
     </div>
   </div>
 </div>
