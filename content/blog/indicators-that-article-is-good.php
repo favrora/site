@@ -5,22 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title></title>
+  <title>Indicators that the article will go</title>
 
   <!-- meta seo -->
   <meta name="robots" content="index, follow">
-  <meta name="description" content="">
+  <meta name="description" content="Top 6 main indicators that an article is to please users. Correct grammar and usefulness of the text. This article will help you create useful content.">
   <meta name="theme-color" content="#0077FF">
   <meta name="author" content="https://www.linkedin.com/in/favrora/">
-  <link rel="canonical" href="https://favrora.com/blog/">
+  <link rel="canonical" href="https://favrora.com/blog/indicators-that-article-is-good">
 
   <!-- Open Graph -->
   <meta property="og:type" content="article">
-  <meta property="og:title" content="">
+  <meta property="og:title" content="Indicators that the article will go">
   <meta property="og:site_name" content="Favrora">
-  <meta property="og:url" content="https://favrora.com/blog/">
-  <meta property="og:image" content="https://favrora.com/src/img/blog/">
-  <meta property="article:published_time" content="2021-05-30">
+  <meta property="og:url" content="https://favrora.com/blog/indicators-that-article-is-good">
+  <meta property="og:image" content="https://favrora.com/src/img/blog/indicators-that-article-is-good/1.jpg">
+  <meta property="article:published_time" content="2021-06-11">
   <meta property="article:author" content="https://www.linkedin.com/in/favrora/">
   <meta property="og:locale" content="en_US">
 
@@ -65,17 +65,16 @@ add_view($conn, $visitor_ip, $page_id);
 
     <h1>Indicators that the article will go</h1>
     <span class="date">
-      30 May 2021 | Author: Alina Nikolaevna |
+      11 June 2021 | Author: Alina Nikolaevna |
       <?php
       $total_page_views = total_views($conn, $page_id); // Returns total views of this page
       echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views;
       ?>
     </span>
 
-    <img src="/src/img/blog/" alt="" class="w-400">
+    <img src="/src/img/blog/indicators-that-article-is-good/1.jpg" alt="Indicators that the article will go" class="w-400">
 
     <p>Before publishing, the text still needs to be edited. It is easier to notice mistakes if you distract from the text for at least a day. But to eliminate roughness, check the text for different types of errors, and only one type at a time. And preliminarily put on the mask of the reader - the average representative of the audience. Constantly think about how to interest him. And follow these six steps in order.</p>
-
 
     <h2>Step 1: Check your balance</h2>
 
@@ -116,6 +115,7 @@ add_view($conn, $visitor_ip, $page_id);
 
     <p>You have done a great job, time to rest. Please take a break from the text for at least a day. Forget about fasting and don't read, even for fun.</p>
 
+    <img src="/src/img/blog/indicators-that-article-is-good/2.jpg" alt="Indicators that the article will go" class="w-400">
 
     <h2>Step 6: Check the GPS</h2>
 
@@ -173,7 +173,7 @@ add_view($conn, $visitor_ip, $page_id);
 
   <?php
   $cmtx_identifier = '23';
-  $cmtx_reference  = 'x';
+  $cmtx_reference  = 'Indicators that the article will go';
   include $_SERVER['DOCUMENT_ROOT'].'/content/ads/box.php';
   ?>
 
@@ -187,11 +187,11 @@ add_view($conn, $visitor_ip, $page_id);
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://favrora.com/blog/page"
+      "@id": "https://favrora.com/blog/indicators-that-article-is-good"
     },
-    "headline": "Page title",
-    "description": "Meta desc",
-    "image": "https://favrora.com/src/img/blog/",
+    "headline": "Indicators that the article will go",
+    "description": "Top 6 main indicators that an article is to please users. Correct grammar and usefulness of the text. This article will help you create useful content.",
+    "image": "https://favrora.com/src/img/blog/indicators-that-article-is-good/1.jpg",
     "author": {
       "@type": "Organization",
       "name": "Favrora"
@@ -204,8 +204,8 @@ add_view($conn, $visitor_ip, $page_id);
         "url": "https://favrora.com/src/img/icon.png"
       }
     },
-    "datePublished": "2021-05-30",
-    "dateModified": "2021-05-30"
+    "datePublished": "2021-06-11",
+    "dateModified": "2021-06-11"
   }
 </script>
 

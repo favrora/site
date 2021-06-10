@@ -56,6 +56,51 @@ require_once('backend/count-view.php'); // PHP functions file
 <div class="container blog-box">
 
   <div class="box">
+    <a href="https://favrora.com/blog/all-about-fake-reviews" title="All about fake reviews">
+      <div class="img" style="background-image: url('/src/img/blog/all-about-fake-reviews/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          11 June 2021 |
+        <?php $total_page_views = total_views($conn, 27); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>All about fake reviews</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/7-big-bad-ab-testing-mistakes" title="7 Big Bad AB Testing Mistakes: Experts Experience will go">
+      <div class="img" style="background-image: url('/src/img/blog/ab-testing-errors/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          11 June 2021 |
+        <?php $total_page_views = total_views($conn, 26); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>7 Big Bad AB Testing Mistakes: Experts Experience</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/indicators-that-article-is-good" title="Indicators that the article will go">
+      <div class="img" style="background-image: url('/src/img/blog/indicators-that-article-is-good/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          11 June 2021 |
+        <?php $total_page_views = total_views($conn, 25); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views; ?>
+        </span>
+        <h3>Indicators that the article will go</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
     <a href="https://favrora.com/blog/what-is-the-semantic-core" title="What is the semantic core of the site?">
       <div class="img" style="background-image: url('/src/img/blog/what-is-the-semantic-core/1.jpg')"></div>
 

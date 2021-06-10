@@ -49,6 +49,21 @@
 -->
 
 <url>
+  <loc>https://favrora.com/blog/all-about-fake-reviews</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://favrora.com/blog/7-big-bad-ab-testing-mistakes</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://favrora.com/blog/indicators-that-article-is-good</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
   <loc>https://favrora.com/blog/what-is-the-semantic-core</loc>
   <priority>0.7</priority>
 </url>

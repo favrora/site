@@ -38,7 +38,7 @@
 <!-- Info -->
 <div class="container">
   <h1>404 Error</h1>
-  <img class="img-404" src="/src/img/404.png" alt="Favrora 404 error">
+  <img class="img-404" src="/src/img/404.jpg" alt="Favrora 404 error">
 </div>
 
 
