@@ -56,6 +56,51 @@ require_once('backend/count-view.php'); // PHP functions file
 <div class="container blog-box">
 
   <div class="box">
+    <a href="https://favrora.com/blog/mistakes-of-web-designers" title="Mistakes of web designers">
+      <div class="img" style="background-image: url('/src/img/blog/mistakes-of-web-designers/1.png')"></div>
+
+      <div class="content">
+        <span class="date">
+          12 June 2021 |
+        <?php $total_page_views = total_views($conn, 30); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>Mistakes of web designers</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/social-media-engagement" title="Social Media Engagement: Everything You Need to Know">
+      <div class="img" style="background-image: url('/src/img/blog/social-media-engagement/1.png')"></div>
+
+      <div class="content">
+        <span class="date">
+          12 June 2021 |
+        <?php $total_page_views = total_views($conn, 29); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>Social Media Engagement: Everything You Need to Know</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/how-to-increase-the-number-of-reposts" title="How to increase the number of reposts">
+      <div class="img" style="background-image: url('/src/img/blog/how-to-increase-the-number-of-reposts/1.png')"></div>
+
+      <div class="content">
+        <span class="date">
+          12 June 2021 |
+        <?php $total_page_views = total_views($conn, 28); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>How to increase the number of reposts</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
     <a href="https://favrora.com/blog/all-about-fake-reviews" title="All about fake reviews">
       <div class="img" style="background-image: url('/src/img/blog/all-about-fake-reviews/1.jpg')"></div>
 

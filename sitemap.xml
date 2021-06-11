@@ -49,6 +49,21 @@
 -->
 
 <url>
+  <loc>https://favrora.com/blog/mistakes-of-web-designers</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://favrora.com/blog/social-media-engagement</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://favrora.com/blog/how-to-increase-the-number-of-reposts</loc>
+  <priority>0.7</priority>
+</url>
+
+<url>
   <loc>https://favrora.com/blog/all-about-fake-reviews</loc>
   <priority>0.7</priority>
 </url>
