@@ -533,7 +533,8 @@ echo "Main page views count: " . $total_page_views;
       </div>
 
       <div class="col-12 submit-div wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-        <button id="btn-send" class="main-btn" type="submit" onclick="send()">Send</button>
+        <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
+        <button id="btn-send" class="main-btn" onclick="checkRecaptcha()">Send</button>
         <div id="infoEmail"></div>
       </div>
 
@@ -549,8 +550,9 @@ echo "Main page views count: " . $total_page_views;
 
 
 <!--====== FOOTER PART START ======-->
-<footer id="footer" class="footer-area pt-120">
+<footer id="footer" class="footer-area">
   <div class="container">
+    <!--
     <div class="subscribe-area wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
       <div class="row">
         <div class="col-lg-6">
@@ -566,8 +568,8 @@ echo "Main page views count: " . $total_page_views;
           <div id="errorSubscribe"></div>
         </div>
       </div>
-      <!-- row -->
-    </div>
+      !-- row --
+    </div> -->
     <!-- subscribe area -->
     <div class="footer-widget pb-20">
       <div class="row">
@@ -675,6 +677,20 @@ echo "Main page views count: " . $total_page_views;
 <!--====== Main js ======-->
 <script src="/src/js/home/owl.carousel.min.js"></script>
 <script src="/src/js/home.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function checkRecaptcha() {
+    const response = grecaptcha.getResponse(),
+      infoField = document.getElementById("infoEmail");
+
+    if (response.length == 0) {
+      infoField.innerHTML = "Please go through the captcha to submit the form!";
+    } else {
+      send();
+    }
+  }
+</script>
 
 
 <!--====== Live Chat js ======-->

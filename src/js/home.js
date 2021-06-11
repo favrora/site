@@ -61,6 +61,7 @@ function selectOption(i) {
   document.getElementById("contact").scrollIntoView();
 }
 
+/*
 function saveEmail() {
   const inputEmail = document.getElementById('emailSubscribe').value,
     errorSubscribe = document.getElementById('errorSubscribe'),
@@ -78,7 +79,7 @@ function saveEmail() {
   } else {
     errorSubscribe.innerHTML = "Incorrect email address!";
   }
-}
+}*/
 
 
 // send email with product

@@ -641,6 +641,14 @@ p {
     right: 50px;
     transform: translateY(-50%);
   }
+
+  .submit-div {
+    flex-flow: column;
+  }
+
+  #btn-send {
+    margin-top: 20px;
+  }
 }
 
 .navbar-btn .main-btn {
@@ -1248,6 +1256,7 @@ p {
   background-position: top center;
   position: relative;
   z-index: 5;
+  padding-top: 300px;
 }
 
 .footer-area::before {

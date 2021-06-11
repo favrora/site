@@ -116,4 +116,12 @@
   #contact-sidebar {
     display: none;
   }
+
+  .submit-div {
+    flex-flow: column;
+  }
+
+  #btn-send {
+    margin-top: 20px;
+  }
 }

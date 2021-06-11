@@ -92,7 +92,8 @@
     </div>
 
     <div class="w-100 submit-div">
-      <button id="btn-send" type="submit" onclick="send()">Send</button>
+      <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
+      <button id="btn-send" type="submit" onclick="checkRecaptcha()">Send</button>
       <div id="infoEmail"></div>
     </div>
 
@@ -100,6 +101,20 @@
 </div>
 
 <script src="/src/js/contact-us.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function checkRecaptcha() {
+    const response = grecaptcha.getResponse(),
+      infoField = document.getElementById("infoEmail");
+
+    if (response.length == 0) {
+      infoField.innerHTML = "Please go through the captcha to submit the form!";
+    } else {
+      send();
+    }
+  }
+</script>
 
 <?php include 'footer.php' ?>
 
