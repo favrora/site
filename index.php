@@ -12,6 +12,7 @@
   <meta name="description" content="Looking for website redesign services? Favrora has a team of experienced web designers offering website redesign services to help drive revenue.">
   <meta name="theme-color" content="#0077FF">
   <link rel="canonical" href="https://favrora.com/">
+  <meta name="google-site-verification" content="NJ3FjzzHl--FoV4VPdWMYXyow12z1_1le2s0Dx4G5mE" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">

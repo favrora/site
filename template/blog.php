@@ -56,6 +56,96 @@ require_once('backend/count-view.php'); // PHP functions file
 <div class="container blog-box">
 
   <div class="box">
+    <a href="https://favrora.com/blog/7-skills-every-internet-marketer-should-have" title="7 Skills Every Internet Marketer Should Have">
+      <div class="img" style="background-image: url('/src/img/blog/skills-for-an-internet-marketer/2.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 36); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>7 Skills Every Internet Marketer Should Have</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/what-is-ssl" title="What is SSL and what is it for?">
+      <div class="img" style="background-image: url('/src/img/blog/what-is-ssl/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 35); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>What is SSL and what is it for?</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/10-mistakes-on-your-portfolio" title="The 10 Biggest Mistakes on Your Portfolio">
+      <div class="img" style="background-image: url('/src/img/blog/portfolio-errors/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 34); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>The 10 Biggest Mistakes on Your Portfolio</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/building-effective-website-usability" title="Principles of Building Effective Website Usability">
+      <div class="img" style="background-image: url('/src/img/blog/website-usability/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 33); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>Principles of Building Effective Website Usability</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/what-is-retargeting" title="What is retargeting? Everything you need to know">
+      <div class="img" style="background-image: url('/src/img/blog/what-is-retargeting/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 32); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>What is retargeting? Everything you need to know</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
+    <a href="https://favrora.com/blog/15-ideas-to-promote-your-business-for-free" title="15 ideas to promote your business for free">
+      <div class="img" style="background-image: url('/src/img/blog/ideas-to-promote-business/1.jpg')"></div>
+
+      <div class="content">
+        <span class="date">
+          19 June 2021 |
+        <?php $total_page_views = total_views($conn, 31); // Returns total views of this page
+        echo "<img src='/src/img/svg/eye.svg' alt='Eye icon' class='eye-icon'>" . $total_page_views ?>
+        </span>
+        <h3>15 ideas to promote your business for free</h3>
+      </div>
+    </a>
+  </div>
+
+  <div class="box">
     <a href="https://favrora.com/blog/mistakes-of-web-designers" title="Mistakes of web designers">
       <div class="img" style="background-image: url('/src/img/blog/mistakes-of-web-designers/1.png')"></div>
 
