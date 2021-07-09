@@ -92,8 +92,8 @@
     </div>
 
     <div class="w-100 submit-div">
-      <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
       <button id="btn-send" type="submit" onclick="checkRecaptcha()">Send</button>
+      <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
       <div id="infoEmail"></div>
     </div>
 

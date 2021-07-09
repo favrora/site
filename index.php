@@ -510,13 +510,11 @@ echo "Main page views count: " . $total_page_views;
       </div>
 
       <div class="col-md-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-        <label for="budget">Your budget</label>
-        <select id="budget" name="client_budget" required>
-          <option value="">Select your budget</option>
-          <option value="300$ - 1500$">300$ - 1500$</option>
-          <option value="800$ - 2000$">800$ - 2000$</option>
-          <option value="1200$ - 10 000$">1200$ - 10 000$</option>
-        </select>
+        <label for="budget">Your budget (USD)</label>
+        <div class="price-input-box">
+          <span class="currency-icon">$</span>
+          <input id="budget" name="client_budget" placeholder="100" type="number" min="100" max="50000" step="any" required>
+        </div>
       </div>
 
       <div class="col-md-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -534,8 +532,8 @@ echo "Main page views count: " . $total_page_views;
       </div>
 
       <div class="col-12 submit-div wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-        <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
         <button id="btn-send" class="main-btn" onclick="checkRecaptcha()">Send</button>
+        <div class="g-recaptcha" data-sitekey="6LfLTiYbAAAAALl0NmKLsaZHNu81zUqwGIAPMGg0"></div>
         <div id="infoEmail"></div>
       </div>
 

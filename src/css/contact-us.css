@@ -52,6 +52,8 @@
 
 #contact .w-100 button {
   width: 120px;
+  margin-right: 20px;
+  height: 50px;
   padding: 12px 0;
   border: 0;
   background: var(--brand-color);
@@ -82,6 +84,7 @@
 
 .submit-div {
   display: flex;
+  align-items: flex-end;
 }
 
 @media screen and (min-width: 767px) {
@@ -118,7 +121,9 @@
   }
 
   .submit-div {
-    flex-flow: column;
+    flex-flow: column-reverse;
+    justify-content: revert;
+    align-items: flex-start;
   }
 
   #btn-send {
