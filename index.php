@@ -144,7 +144,6 @@ echo "Main page views count: " . $total_page_views;
           <div class="header-hero-content text-center">
             <h1 class="header-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.5s">Website redesign services</h1>
             <p class="text wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.8s">Modern attractive website design has a positive effect on behavioral factors, contributes to the growth of the site's position in search engines and provides an increase in sales.</p>
-            <a href="#contact" class="main-btn wow fadeInUp page-scroll" data-wow-duration="1.3s" data-wow-delay="1.1s">Buy services</a>
           </div>
           <!-- header hero content -->
         </div>
@@ -181,7 +180,7 @@ echo "Main page views count: " . $total_page_views;
       <div class="col-lg-10">
         <div class="section-title text-center pb-40">
           <div class="line m-auto"></div>
-          <h3 class="title wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">Clean and simple design, <span> Comes with everything you need to get started!</span></h3>
+          <h3 class="title wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">A clean and simple design<span> will increase your website's income!</span></h3>
         </div>
         <!-- section title -->
       </div>
@@ -503,18 +502,22 @@ echo "Main page views count: " . $total_page_views;
       </div>
 
       <div class="col-md-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.4s">
-        <label for="email">Your E-mail</label>
+        <label for="email">Your Email</label>
         <div>
           <input type="email" id="email" name="visitor_email" placeholder="john.doe@site.com" required>
         </div>
       </div>
 
       <div class="col-md-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-        <label for="budget">Your budget (USD)</label>
-        <div class="price-input-box">
-          <span class="currency-icon">$</span>
-          <input id="budget" name="client_budget" placeholder="100" type="number" min="100" max="50000" step="any" required>
-        </div>
+        <label for="budget">Your budget</label>
+        <select id="budget" name="client_budget" required>
+          <option value="">Choose an approximate budget</option>
+          <option value="300$ - 1500$">300$ - 1500$</option>
+          <option value="800$ - 2000$">800$ - 2000$</option>
+          <option value="1200$ - 10 000$">1200$ - 10 000$</option>
+          <option value="1200$ - 10 000$">1200$ - 10 000$</option>
+          <option value="Not sure">Not sure</option>
+        </select>
       </div>
 
       <div class="col-md-6 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -551,8 +554,9 @@ echo "Main page views count: " . $total_page_views;
 <!--====== FOOTER PART START ======-->
 <footer id="footer" class="footer-area">
   <div class="container">
-    <!--
-    <div class="subscribe-area wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+    <span style="display: none">
+      <!--
+      <div class="subscribe-area wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
       <div class="row">
         <div class="col-lg-6">
           <div class="subscribe-content mt-20">
@@ -569,6 +573,7 @@ echo "Main page views count: " . $total_page_views;
       </div>
       !-- row --
     </div> -->
+    </span>
     <!-- subscribe area -->
     <div class="footer-widget pb-20">
       <div class="row">
@@ -636,9 +641,9 @@ echo "Main page views count: " . $total_page_views;
 
         <div class="col-md-6">
           <ul class="social">
-            <li><a href="https://twitter.com/favrora_com" title="Twitter"><i class="lni lni-twitter-filled"></i></a></li>
-            <li><a href="https://www.instagram.com/favrora_com/" title="Instagram"><i class="lni lni-instagram-filled"></i></a></li>
-            <li><a href="https://www.linkedin.com/company/favrora/" title="Linkedin"><i class="lni lni-linkedin-original"></i></a></li>
+            <li><a href="https://twitter.com/favrora_com" title="Twitter" target="_blank"><i class="lni lni-twitter-filled"></i></a></li>
+            <li><a href="https://www.instagram.com/favrora_com/" title="Instagram" target="_blank"><i class="lni lni-instagram-filled"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/favrora/" title="Linkedin" target="_blank"><i class="lni lni-linkedin-original"></i></a></li>
           </ul>
         </div>
       </div>
@@ -655,17 +660,11 @@ echo "Main page views count: " . $total_page_views;
 <!--====== Jquery js ======-->
 <script src="/src/js/home/vendor/jquery-3.5.1-min.js"></script>
 <script src="/src/js/home/vendor/modernizr-3.7.1.min.js"></script>
-<!--====== Bootstrap js ======-->
-<script src="/src/js/home/popper.min.js"></script>
-<script src="/src/js/home/bootstrap-4.5.0.min.js"></script>
-<!--====== Plugins js ======-->
-<script src="/src/js/home/plugins.js"></script>
+
 <!--====== Counter Up js ======-->
 <script src="/src/js/home/waypoints.min.js"></script>
 <script src="/src/js/home/jquery.counterup.min.js"></script>
-<!--====== Scrolling Nav js ======-->
-<script src="/src/js/home/jquery.easing.min.js"></script>
-<script src="/src/js/home/scrolling-nav.js"></script>
+
 <!--====== wow js ======-->
 <script src="/src/js/home/wow.min.js"></script>
 <!--====== Particles js ======-->
@@ -676,6 +675,22 @@ echo "Main page views count: " . $total_page_views;
 <!--====== Main js ======-->
 <script src="/src/js/home/owl.carousel.min.js"></script>
 <script src="/src/js/home.js"></script>
+
+
+<!--====== Bootstrap js ======
+<script src="/src/js/home/popper.min.js"></script>
+<script src="/src/js/home/bootstrap-4.5.0.min.js"></script>-->
+
+<!--====== Scrolling Nav js ======-->
+<!--====== Plugins js ======-->
+<!--
+<script src="/src/js/home/jquery.easing.min.js"></script>
+
+<script src="/src/js/home/plugins.js"></script>
+
+<script src="/src/js/home/scrolling-nav.js"></script> -->
+
+
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>

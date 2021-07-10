@@ -301,6 +301,9 @@ $(function () {
         loop: true,
         center: true,
         margin: 0,
+        autoplay: true,
+        autoplayTimeout: 8000,
+        autoplayHoverPause: true,
         responsiveClass: true,
         nav: false,
         responsive: {

@@ -98,11 +98,3 @@ function sendEmail(data, url, success) {
   xhr.send(params);
   return xhr;
 }
-
-const budget = document.getElementById('budget');
-
-budget.addEventListener('input', function() {
-  if (budget.value.length > 5) {
-    budget.value = budget.value.slice(0, 5);
-  }
-})

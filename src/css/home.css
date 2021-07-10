@@ -708,14 +708,18 @@ p {
   }
 }
 
-.header-hero-content .text {
-  color: #fff;
-  margin-top: 10px;
-  font-family: Verdana, sans-serif;
+@media (min-width: 1600px) {
+  .header-hero-content {
+    padding-bottom: 350px;
+  }
 }
 
-.header-hero-content .main-btn {
+.header-hero-content .text {
+  color: #fff;
   margin-top: 20px;
+  letter-spacing: 1px;
+  font: 18px sans-serif, Arial, Verdana;
+  line-height: 1.3;
 }
 
 .header-hero-image {
@@ -1277,7 +1281,7 @@ p {
 
 @media only screen and (min-width: 1855px) {
   .footer-area {
-    padding-top: 250px!important;
+    padding-top: 350px!important;
   }
 }
 
@@ -1389,7 +1393,8 @@ p {
 ===========================*/
 
 #contact input,
-#contact #message {
+#contact #message,
+#contact select {
   width: 100%;
   box-sizing: border-box;
   background: #fcfdff;
@@ -1439,27 +1444,6 @@ p {
   position: absolute;
   height: 50px;
   right: 50px;
-}
-
-.price-input-box {
-  position: relative;
-}
-
-.price-input-box input#budget {
-  width: calc(100% - 37px);
-}
-
-.currency-icon {
-  position: absolute;
-  right: 0;
-  bottom: 10px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e3e3e3;
-  border-radius: 0 3px 3px 0;
 }
 
 @media (max-width: 767px) {
