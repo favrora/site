@@ -442,8 +442,8 @@ echo "Main page views count: " . $total_page_views;
                 <div class="d-flex counter-items">
                   <img src="/src/img/home/finished-project.svg" alt="Finished project icon">
                   <div class="m-left-20">
-                    <span class="count"><span class="counter">7</span></span>
-                    <p class="text">Finished Project</p>
+                    <span class="count"><span class="counter">38</span></span>
+                    <p class="text">Achievements</p>
                   </div>
                 </div>
               </div>
@@ -454,7 +454,7 @@ echo "Main page views count: " . $total_page_views;
                 <div class="d-flex counter-items">
                   <img src="/src/img/home/team-members.svg" alt="Team Members icon">
                   <div class="m-left-20">
-                    <span class="count"><span class="counter">4</span></span>
+                    <span class="count"><span class="counter">6</span></span>
                     <p class="text">Team Members</p>
                   </div>
                 </div>
@@ -466,7 +466,7 @@ echo "Main page views count: " . $total_page_views;
                 <div class="d-flex counter-items">
                   <img src="/src/img/home/our-blog-posts.svg" alt="Our Blog Posts">
                   <div class="m-left-20">
-                    <span class="count"><span class="counter">24</span></span>
+                    <span class="count"><span class="counter">40</span></span>
                     <p class="text">Our Blog Posts</p>
                   </div>
                 </div>
