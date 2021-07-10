@@ -1348,6 +1348,10 @@ p {
   .footer-copyright .copyright {
     text-align: center;
   }
+
+  .footer-widget {
+    padding-top: 70px;
+  }
 }
 
 .link-wrapper .link {
