@@ -45,15 +45,13 @@ $(function () {
 
     $(".navbar-nav a").on('click', function () {
         $(".navbar-collapse").removeClass("show");
+        $(".navbar-toggler").removeClass('active');
     });
 
     $(".navbar-toggler").on('click', function () {
         $(this).toggleClass("active");
+        $("#navbarSupportedContent").toggleClass("show");
     });
-
-    $(".navbar-nav a").on('click', function () {
-        $(".navbar-toggler").removeClass('active');
-    });    
     
 
     //===== Counter Up
