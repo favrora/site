@@ -708,7 +708,7 @@ p {
   }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1500px) {
   .header-hero-content {
     padding-bottom: 350px;
   }
@@ -732,7 +732,12 @@ p {
 }
 
 .header-hero .main-btn {
-  margin-top: 20px;
+  margin: 20px 0 40px;
+  background: #0cc31a;
+}
+
+.header-hero .main-btn:hover {
+  background: linear-gradient(to right, #0cc31a 0%, #12b01e 50%, #008b0b 100%);
 }
 
 @media (max-width: 767px) {

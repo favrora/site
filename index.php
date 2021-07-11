@@ -144,7 +144,7 @@ echo "Main page views count: " . $total_page_views;
           <div class="header-hero-content text-center">
             <h1 class="header-title wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.5s">Website redesign services</h1>
             <p class="text wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="0.8s">Modern attractive website design has a positive effect on behavioral factors, contributes to the growth of the site's position in search engines and provides an increase in sales.</p>
-            <button id="contactBtn" class="main-btn wow fadeInUp page-scroll" data-wow-duration="1.3s" data-wow-delay="1.1s">Buy services</button>
+            <button id="contactBtn" class="main-btn wow fadeInUp" data-wow-duration="1.3s" data-wow-delay="1.1s">Buy services</button>
           </div>
           <!-- header hero content -->
         </div>
