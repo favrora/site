@@ -731,6 +731,10 @@ p {
   max-width: 650px;
 }
 
+.header-hero .main-btn {
+  margin-top: 20px;
+}
+
 @media (max-width: 767px) {
   .header-hero-image img {
     max-width: 100%;

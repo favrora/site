@@ -98,3 +98,15 @@ function sendEmail(data, url, success) {
   xhr.send(params);
   return xhr;
 }
+
+const contactBtn = document.getElementById("contactBtn"),
+  contactSection = document.getElementById("contact");
+
+contactBtn.addEventListener('click', () => {
+
+  window.scroll({
+    behavior: 'smooth',
+    left: 0,
+    top: contactSection.offsetTop - 80
+  });
+});
