@@ -620,7 +620,6 @@ echo "Main page views count: " . $total_page_views;
               <h4 class="title">Contact Us</h4>
             </div>
             <ul class="contact pt-10">
-              <li>support@favrora.com</li>
               <li>Favrora.com</li>
               <li>NY city, USA</li>
             </ul>
